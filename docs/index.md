@@ -1,13 +1,16 @@
 ---
-Title: Slack
-Organization: Turbot HQ, Inc
-iconURL: https://turbot.com/images/turbot-icon-original.png
-
+organization: Turbot
+category: ["saas"]
+icon_url: "/images/plugins/turbot/slack.svg"
+brand_color: "#7C2852"
+display_name: "Slack"
+name: "slack"
+description: "Steampipe plugin for querying Slack Conversations, Groups, Users and other resources."
 ---
 
 # Slack
 
-The Slack plugin is used to query tickets, users and other data.
+The Slack plugin is used to query conversations, users and other data.
 
 
 ## Installation
