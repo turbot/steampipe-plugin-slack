@@ -1,6 +1,6 @@
 
 <p align="center">
-    <h1 align="center">Steampipe Plugin for Slack</h1>
+    <h1 align="center">Slack Plugin for Steampipe</h1>
 </p>
 
 <p align="center">
