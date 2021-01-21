@@ -69,13 +69,13 @@ func tableSlackUser() *plugin.Table {
 			{Name: "real_name_normalized", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.RealNameNormalized").NullIfZero(), Description: "The real_name field, but with any non-Latin characters filtered out."},
 			{Name: "skype", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.Skype").NullIfZero(), Description: "Skype handle of the user."},
 			{Name: "status_emoji", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.StatusEmoji").NullIfZero(), Description: "Status emoji the user has set."},
-			{Name: "status_expiration", Type: proto.ColumnType_DATETIME, Transform: transform.FromField("Profile.StatusExpiration").Transform(intToTime), Description: "Expiration for the user status."},
+			{Name: "status_expiration", Type: proto.ColumnType_TIMESTAMP, Transform: transform.FromField("Profile.StatusExpiration").Transform(intToTime), Description: "Expiration for the user status."},
 			{Name: "status_text", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.StatusText").NullIfZero(), Description: "Status text the user has set."},
 			{Name: "team_id", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.Team").NullIfZero(), Description: "The team workspace that the user is a member of."},
 			{Name: "tz", Type: proto.ColumnType_STRING, Transform: transform.FromField("TZ").NullIfZero(), Description: "A human-readable string for the geographic timezone-related region this user has specified in their account."},
 			{Name: "tz_label", Type: proto.ColumnType_STRING, Transform: transform.FromField("TZLabel").NullIfZero(), Description: "Describes the commonly used name of the timezone."},
 			{Name: "tz_offset", Type: proto.ColumnType_INT, Transform: transform.FromField("TZOffset").NullIfZero(), Description: "Indicates the number of seconds to offset UTC time by for this user's timezone."},
-			{Name: "updated", Type: proto.ColumnType_DATETIME, Transform: transform.FromField("Updated").Transform(jsonTimeToTime), Description: "Time when the user was last updated."},
+			{Name: "updated", Type: proto.ColumnType_TIMESTAMP, Transform: transform.FromField("Updated").Transform(jsonTimeToTime), Description: "Time when the user was last updated."},
 
 			// These work, but are very heavy on the Slack API rate limit
 			//{Name: "presence", Type: proto.ColumnType_STRING, Hydrate: getUserPresence},

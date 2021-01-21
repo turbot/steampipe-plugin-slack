@@ -26,8 +26,8 @@ func tableSlackAccessLog() *plugin.Table {
 			// Other columns
 			{Name: "count", Type: proto.ColumnType_INT, Description: "Number of sequential logins from this device."},
 			{Name: "country", Type: proto.ColumnType_STRING, Description: "Country the login originated from, if available. Often null."},
-			{Name: "date_first", Type: proto.ColumnType_DATETIME, Transform: transform.FromField("DateFirst").Transform(intToTime), Description: "Date of the first login in a sequence from this device."},
-			{Name: "date_last", Type: proto.ColumnType_DATETIME, Transform: transform.FromField("DateLast").Transform(intToTime), Description: "Date of the last login in a sequence from this device."},
+			{Name: "date_first", Type: proto.ColumnType_TIMESTAMP, Transform: transform.FromField("DateFirst").Transform(intToTime), Description: "Date of the first login in a sequence from this device."},
+			{Name: "date_last", Type: proto.ColumnType_TIMESTAMP, Transform: transform.FromField("DateLast").Transform(intToTime), Description: "Date of the last login in a sequence from this device."},
 			{Name: "isp", Type: proto.ColumnType_STRING, Transform: transform.FromField("ISP"), Description: "ISP the login originated from, if available. Often null."},
 			{Name: "region", Type: proto.ColumnType_STRING, Description: "Region the login originated from, if available. Often null."},
 			{Name: "user_agent", Type: proto.ColumnType_STRING, Description: "User agent of the device used for login."},
