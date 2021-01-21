@@ -31,7 +31,8 @@ Learn about [Steampipe](https://steampipe.io/).
 **[Table documentation and examples &rarr;](https://hub.steampipe.io/plugins/turbot/slack)**
 
 Install the plugin:
-```
+
+```shell
 steampipe plugin install slack
 ```
 
