@@ -1,0 +1,3 @@
+connection "slack" {
+  plugin    = "slack"                 
+}
