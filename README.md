@@ -20,7 +20,7 @@
 
 Use SQL to query users, channels, emoji and more from your Slack workspace. For example:
 
-```
+```sql
 select email, is_admin from slack_user;
 ```
 
