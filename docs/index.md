@@ -66,7 +66,7 @@ prefer.
 
 | Table | Scope Required |
 |--|--|
-| `slack_access_log` | `admin` |
+| `slack_access_log` | `admin` ([paid plan required](https://slack.com/help/articles/360002084807-View-Access-Logs-for-your-workspace)) |
 | `slack_connection` | _None_ |
 | `slack_conversation` | `channels:read`, `groups:read`, `im:read`, `mpim:read` |
 | `slack_emoji` | `emoji:read` |

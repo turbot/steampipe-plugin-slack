@@ -5,6 +5,8 @@ runs from the same device using the count field.
 
 Currently limited to the first 5,000 records.
 
+**NOTE**: `slack_access_log` requires a [paid Slack plan](https://slack.com/help/articles/360002084807-View-Access-Logs-for-your-workspace).
+
 ## Examples
 
 ### List all logins

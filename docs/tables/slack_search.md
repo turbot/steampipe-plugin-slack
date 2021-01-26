@@ -2,6 +2,9 @@
 
 Searches for messages and files matching a query.
 
+**NOTE**: The `slack_search` table requires the `query` field to be specified
+in all queries, otherwise it does not know what to search for.
+
 ## Examples
 
 ### Search for anything
@@ -10,7 +13,7 @@ Searches for messages and files matching a query.
 select
   *
 from
-  slack_search_messages
+  slack_search
 where
   query = 'my query';
 ```
