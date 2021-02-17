@@ -41,18 +41,33 @@ create an App in Slack with the appropriate permissions.
 The default connection. This uses standard Application Default Credentials (ADC) against the Slack
 
 ```hcl
-   connection "steampipe_cli" {
-   plugin    = "slack"
-   }
+ connection "steampipe_cli" {
+ plugin    = "slack"
+ }
 ```
 
 A connection to a specific workspace, using non default Credentials.
-   ```hcl
-   connection "steampipe_cli_admin" {
-   plugin    = "slack"
-   token   = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
-   }
-   ```
+
+```hcl
+connection "steampipe_cli_admin" {
+plugin    = "slack"
+token   = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
+}
+```
+
+Run a query:
+
+```bash
+$ steampipe query
+Welcome to Steampipe v0.0.11
+Type ".inspect" for more information.
+> select * from slack_connection;
++-------------------------+------+--------+-----------+-----------+---------------+--------+
+|             url         | team |  user  |  team_id  |  user_id  | enterprise_id | bot_id |
++-------------------------+------+--------+-----------+-----------+---------------+--------+
+| https://acme.slack.com/ | ACME | dwight | T02GD4B7C | U03GC6A7E |               |        |
++-------------------------+------+--------+-----------+-----------+---------------+--------+
+```
 
 ## Permissions and Scopes
 
