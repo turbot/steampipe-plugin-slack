@@ -55,20 +55,6 @@ token   = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b2
 }
 ```
 
-Run a query:
-
-```bash
-$ steampipe query
-Welcome to Steampipe v0.0.11
-Type ".inspect" for more information.
-> select * from slack_connection;
-+-------------------------+------+--------+-----------+-----------+---------------+--------+
-|             url         | team |  user  |  team_id  |  user_id  | enterprise_id | bot_id |
-+-------------------------+------+--------+-----------+-----------+---------------+--------+
-| https://acme.slack.com/ | ACME | dwight | T02GD4B7C | U03GC6A7E |               |        |
-+-------------------------+------+--------+-----------+-----------+---------------+--------+
-```
-
 ## Permissions and Scopes
 
 Scopes are used to determine the permissions and access granted to your App in Slack.

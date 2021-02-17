@@ -67,7 +67,7 @@ func tableSlackConversation() *plugin.Table {
 }
 
 func listConversations(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx)
+	api, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_conversation.listConversations", "connection_error", err)
 		return nil, err
@@ -93,7 +93,7 @@ func listConversations(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 func getConversation(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	quals := d.KeyColumnQuals
 	id := quals["id"].GetStringValue()
-	api, err := connect(ctx)
+	api, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_conversation.getConversation", "connection_error", err)
 		return nil, err

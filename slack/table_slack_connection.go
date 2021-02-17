@@ -28,7 +28,7 @@ func tableSlackConnection() *plugin.Table {
 }
 
 func listConnections(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx)
+	api, err := connect(ctx, d)
 	if err != nil {
 		return nil, err
 	}
