@@ -14,13 +14,15 @@ The Slack plugin is used to query conversations, users and other data.
 
 ## Installation
 
-Download and install the latest Slack plugin:
+To download and install the latest Slack plugin:
 
 ```bash
 $ steampipe plugin install slack
 Installing plugin slack...
 $
 ```
+
+Installing the latest zendesk plugin will create a default connection named `slack`. This connection will dynamically determine the scope and credentials using the `SLACK_TOKEN` environment variable.
 
 ## Connection Configuration
 
@@ -38,22 +40,22 @@ create an App in Slack with the appropriate permissions.
 
 ### Configure API Token
 
-The default connection. This uses standard Application Default Credentials (ADC) against the Slack
+- The default connection. This uses standard Application Default Credentials (ADC) against the Slack
 
-```hcl
- connection "steampipe_cli" {
- plugin    = "slack"
- }
-```
+  ```hcl
+  connection "steampipe_cli" {
+    plugin    = "slack"
+  }
+  ```
 
-A connection to a specific workspace, using non default Credentials.
+- A connection to a specific workspace, using non default Credentials.
 
-```hcl
-connection "steampipe_cli_admin" {
-plugin    = "slack"
-token   = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
-}
-```
+  ```hcl
+  connection "steampipe_cli_admin" {
+    plugin  = "slack"
+    token   = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
+  }
+  ```
 
 ## Permissions and Scopes
 
@@ -71,3 +73,7 @@ prefer.
 | `slack_group`        | `usergroups:read`                                                                                                |
 | `slack_search`       | `search:read`                                                                                                    |
 | `slack_user`         | `users:read`, `users:read.email`                                                                                 |
+
+```
+
+```
