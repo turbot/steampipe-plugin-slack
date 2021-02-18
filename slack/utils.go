@@ -25,7 +25,7 @@ func connect(_ context.Context, d *plugin.QueryData) (*slack.Client, error) {
 	}
 
 	if token == "" {
-		return nil, errors.New("'token' must be set in the connection configuration to authenticate to Slack")
+		return nil, errors.New("'token' must be set in the connection configuration. Edit your connection configuration file and then restart Steampipe")
 	}
 
 	api := slack.New(token, slack.OptionDebug(false))
