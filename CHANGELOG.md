@@ -2,4 +2,4 @@
 
 _What's new?_
 
-- Added support for setting [connection configuration](https://github.com/turbot/steampipe-plugin-slack/blob/main/docs/index.md#connection-configuration) arguments for the plugin.
+- Added support for setting [connection configuration](https://github.com/turbot/steampipe-plugin-slack/blob/main/docs/index.md#connection-configuration). You may specify slack `token` for each connection in a configuration file.
