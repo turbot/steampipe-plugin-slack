@@ -85,7 +85,7 @@ func tableSlackUser() *plugin.Table {
 }
 
 func listUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx)
+	api, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_user.listUsers", "connection_error", err)
 		return nil, err
@@ -103,7 +103,7 @@ func listUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) 
 }
 
 func getUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx)
+	api, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_user.getUser", "connection_error", err)
 		return nil, err
@@ -136,7 +136,7 @@ func getUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (i
 }
 
 func getUserPresence(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx)
+	api, err := connect(ctx, d)
 	if err != nil {
 		return nil, err
 	}

@@ -14,7 +14,7 @@ The Slack plugin is used to query conversations, users and other data.
 
 ## Installation
 
-Download and install the latest Slack plugin:
+To download and install the latest Slack plugin:
 
 ```bash
 $ steampipe plugin install slack
@@ -26,8 +26,19 @@ $
 
 Connection configurations are defined using HCL in one or more Steampipe config files. Steampipe will load ALL configuration files from ~/.steampipe/config that have a .spc extension. A config file may contain multiple connections.
 
-API tokens in Slack are associated with Apps. To use Steampipe, you need to
-create an App in Slack with the appropriate permissions.
+Installing the latest slack plugin will create a connection file (`~/.steampipe/config/slack.spc`) with a single connection named `slack`. You must set your API token in this this connection in order to authenticate to Slack:
+
+  ```hcl
+  connection "slack" {
+    plugin  = "slack"
+    token   = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
+  }
+  ```
+
+
+## Credentials
+
+API tokens in Slack are associated with Apps. To use Steampipe, you need to create an App in Slack with the appropriate permissions.
 
 1. Sign in to the Slack website, and view Your Apps at https://api.slack.com/apps
 2. Create New App for your workspace, e.g. `Steampipe CLI`.
@@ -36,25 +47,7 @@ create an App in Slack with the appropriate permissions.
 5. (Re-)Install your app.
 6. Get the user oauth token for your team. It looks like `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`
 
-### Configure API Token
-
-The default connection. This uses standard Application Default Credentials (ADC) against the Slack
-
-```hcl
-   connection "steampipe_cli" {
-   plugin    = "slack"
-   }
-```
-
-A connection to a specific workspace, using non default Credentials.
-   ```hcl
-   connection "steampipe_cli_admin" {
-   plugin    = "slack"
-   token   = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
-   }
-   ```
-
-## Permissions and Scopes
+### Permissions and Scopes
 
 Scopes are used to determine the permissions and access granted to your App in Slack.
 Steampipe requires different permissions for each table. We recommend granting all

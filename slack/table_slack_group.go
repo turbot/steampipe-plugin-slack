@@ -40,7 +40,7 @@ func tableSlackGroup() *plugin.Table {
 }
 
 func listGroups(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx)
+	api, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_group.listGroups", "connection_error", err)
 		return nil, err

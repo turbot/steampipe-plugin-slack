@@ -9,7 +9,11 @@ import (
 
 func Plugin(_ context.Context) *plugin.Plugin {
 	p := &plugin.Plugin{
-		Name:             "steampipe-plugin-slack",
+		Name: "steampipe-plugin-slack",
+		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
+			NewInstance: ConfigInstance,
+			Schema:      ConfigSchema,
+		},
 		DefaultTransform: transform.FromGo().NullIfZero(),
 		TableMap: map[string]*plugin.Table{
 			"slack_access_log":   tableSlackAccessLog(),

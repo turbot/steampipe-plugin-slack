@@ -27,7 +27,7 @@ type slackEmoji struct {
 }
 
 func listEmojis(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx)
+	api, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_emoji.listEmojis", "connection_error", err)
 		return nil, err

@@ -10,14 +10,24 @@ import (
 
 	"github.com/slack-go/slack"
 
+	"github.com/turbot/steampipe-plugin-sdk/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/plugin/transform"
 )
 
-func connect(_ context.Context) (*slack.Client, error) {
-	token, ok := os.LookupEnv("SLACK_TOKEN")
-	if !ok || token == "" {
-		return nil, errors.New("SLACK_TOKEN environment variable must be set")
+func connect(_ context.Context, d *plugin.QueryData) (*slack.Client, error) {
+	token := os.Getenv("SLACK_TOKEN")
+
+	slackConfig := GetConfig(d.Connection)
+	if &slackConfig != nil {
+		if slackConfig.Token != nil {
+			token = *slackConfig.Token
+		}
 	}
+
+	if token == "" {
+		return nil, errors.New("'token' must be set in the connection configuration to authenticate to Slack")
+	}
+
 	api := slack.New(token, slack.OptionDebug(false))
 	return api, nil
 }

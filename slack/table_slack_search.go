@@ -36,7 +36,7 @@ func tableSlackSearch() *plugin.Table {
 }
 
 func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx)
+	api, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_search.listSearches", "connection_error", err)
 		return nil, err
