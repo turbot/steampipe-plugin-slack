@@ -25,7 +25,7 @@ func connect(_ context.Context, d *plugin.QueryData) (*slack.Client, error) {
 	}
 
 	if token == "" {
-		return nil, errors.New("SLACK_TOKEN environment variable must be set")
+		return nil, errors.New("'token' must be set in the connection configuration to authenticate to Slack")
 	}
 
 	api := slack.New(token, slack.OptionDebug(false))
