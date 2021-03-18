@@ -1,3 +1,10 @@
+## v0.2.2 [2021-03-18]
+
+_Enhancements_
+
+- Update examples in `slack_search` table ([#11](https://github.com/turbot/steampipe-plugin-slack/pull/11))
+- Recompiled plugin with [steampipe-plugin-sdk v0.2.4](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v024-2021-03-16)
+
 ## v0.2.1 [2021-02-25]
 
 _Bug fixes_
