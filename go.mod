@@ -4,5 +4,5 @@ go 1.15
 
 require (
 	github.com/slack-go/slack v0.7.4
-	github.com/turbot/steampipe-plugin-sdk v0.2.4
+	github.com/turbot/steampipe-plugin-sdk v1.3.0
 )
