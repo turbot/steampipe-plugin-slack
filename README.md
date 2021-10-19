@@ -20,7 +20,7 @@ steampipe plugin install slack
 Run a query:
 
 ```sql
-select id, display_name, real_name from slack_user;
+select email, is_admin from slack_user;
 ```
 
 ## Developing
