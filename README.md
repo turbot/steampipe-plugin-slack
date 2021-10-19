@@ -64,9 +64,9 @@ Further reading:
 
 ## Contributing
 
-Please see the [contribution guidelines](https://github.com/turbot/steampipe/blob/main/CONTRIBUTING.md) and our [code of conduct](https://github.com/turbot/steampipe/blob/main/CODE_OF_CONDUCT.md). All contributions are subject to the [Apache 2.0 open source license](https://github.com/turbot/steampipe-plugin-aws/blob/main/LICENSE).
+Please see the [contribution guidelines](https://github.com/turbot/steampipe/blob/main/CONTRIBUTING.md) and our [code of conduct](https://github.com/turbot/steampipe/blob/main/CODE_OF_CONDUCT.md). All contributions are subject to the [Apache 2.0 open source license](https://github.com/turbot/steampipe-plugin-slack/blob/main/LICENSE).
 
 `help wanted` issues:
 
 - [Steampipe](https://github.com/turbot/steampipe/labels/help%20wanted)
-- [AWS Plugin](https://github.com/turbot/steampipe-plugin-aws/labels/help%20wanted)
+- [Slack Plugin](https://github.com/turbot/steampipe-plugin-slack/labels/help%20wanted)
