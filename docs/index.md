@@ -17,7 +17,7 @@ og_image: image needed
 [Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
 
 For example:
-Add query and table
+Placeholder for example query and table
 
 ## Documentation
 
@@ -38,7 +38,7 @@ steampipe plugin install slack
 API tokens in Slack are associated with Apps. To use Steampipe, you need to create an App in Slack with the appropriate permissions.
 
 1. Log in to the Slack website, and view your Apps at https://api.slack.com/apps.
-2. Create New App for your workspace, e.g. `Steampipe CLI`.
+2. Create a New App for your workspace, e.g. `Steampipe CLI`.
 3. In "Add features & functionality", choose "Permissions".
 4. Grant permissions in a User token scope. This means the Slack App is acting on your behalf. Refer Permissions and Scopes for necessary scopes by table.
 5. Reinstall your app.
@@ -77,7 +77,7 @@ preferred.
 
 ## Configuring Slack Credentials
 
-Need content here
+Placeholder for credentials
  
 ## Get Involved
 
