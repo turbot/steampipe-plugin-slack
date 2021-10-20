@@ -41,12 +41,12 @@ API tokens in Slack are associated with Apps. To use Steampipe, you need to crea
 2. Create New App for your workspace, e.g. `Steampipe CLI`.
 3. In "Add features & functionality", choose "Permissions".
 4. Grant permissions in a User token scope. This means the Slack App is acting on your behalf. Refer Permissions and Scopes for necessary scopes by table.
-5. (Re-)Install your app.
-6. Get the user oauth token for your team. It looks like `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`
+5. Reinstall your app.
+6. Get the user oAuth token for your team. It looks like `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`
 
 ### Connection Configuration
 
-Connection configurations are defined using HCL in one or more Steampipe config files. Steampipe will load ALL configuration files from ~/.steampipe/config that have a .spc extension. A config file may contain multiple connections.
+Connection configurations are defined using HCL in one or more Steampipe config files. Steampipe will load all configuration files from ~/.steampipe/config that have a .spc extension. A config file may contain multiple connections.
 
 Installing the latest slack plugin will create a connection file (`~/.steampipe/config/slack.spc`) with a single connection named `slack`. You must set your API token in this this connection in order to authenticate to Slack:
 
@@ -61,8 +61,8 @@ Installing the latest slack plugin will create a connection file (`~/.steampipe/
 
 Scopes are used to determine the permissions and access granted to your App in Slack.
 Steampipe requires different permissions for each table. We recommend granting all
-of the scopes in the table below, but you can restrict them to specific tables if you
-prefer.
+the scopes in the table below, but you can restrict them to specific tables if
+preferred.
 
 | Table                | Scope Required                                                                                                   |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
