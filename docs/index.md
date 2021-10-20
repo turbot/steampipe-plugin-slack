@@ -77,7 +77,7 @@ preferred.
 
 ## Configuring Slack Credentials
 
-Placeholder for credentials
+Placeholder for configuring credentials
  
 ## Get Involved
 
