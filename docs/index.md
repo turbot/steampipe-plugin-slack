@@ -1,28 +1,50 @@
 ---
 organization: Turbot
-category: ["saas"]
+category: ["SaaS"]
 icon_url: "/images/plugins/turbot/slack.svg"
 brand_color: "#7C2852"
 display_name: "Slack"
-name: "slack"
-description: "Steampipe plugin for querying Slack Conversations, Groups, Users and other resources."
+short_name: "slack"
+description: "Steampipe plugin for querying Slack Conversations, Groups, Users, and other resources."
+og_description: "Query Slack with SQL! Open source CLI. No DB required." 
+og_image: image needed
 ---
 
-# Slack
+# Slack + Steampipe
 
-The Slack plugin is used to query conversations, users and other data.
+[Slack](https://slack.com/) is a business communication platform that offers IRC type features for facilitating communication between groups and individuals.  
 
-## Installation
+[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
 
-To download and install the latest Slack plugin:
+For example:
+Add query and table
+
+## Documentation
+
+- **[Table definitions & examples →](https://hub.steampipe.io/plugins/turbot/slack/tables)**
+
+## Get started
+
+### Install
+
+Download and install the latest Slack plugin:
 
 ```bash
-$ steampipe plugin install slack
-Installing plugin slack...
-$
+steampipe plugin install slack
 ```
 
-## Connection Configuration
+### Credentials
+
+API tokens in Slack are associated with Apps. To use Steampipe, you need to create an App in Slack with the appropriate permissions.
+
+1. Log in to the Slack website, and view your Apps at https://api.slack.com/apps.
+2. Create New App for your workspace, e.g. `Steampipe CLI`.
+3. In "Add features & functionality", choose "Permissions".
+4. Grant permissions in a User token scope. This means the Slack App is acting on your behalf. Refer Permissions and Scopes for necessary scopes by table.
+5. (Re-)Install your app.
+6. Get the user oauth token for your team. It looks like `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`
+
+### Connection Configuration
 
 Connection configurations are defined using HCL in one or more Steampipe config files. Steampipe will load ALL configuration files from ~/.steampipe/config that have a .spc extension. A config file may contain multiple connections.
 
@@ -34,18 +56,6 @@ Installing the latest slack plugin will create a connection file (`~/.steampipe/
     token   = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
   }
   ```
-
-
-## Credentials
-
-API tokens in Slack are associated with Apps. To use Steampipe, you need to create an App in Slack with the appropriate permissions.
-
-1. Sign in to the Slack website, and view Your Apps at https://api.slack.com/apps
-2. Create New App for your workspace, e.g. `Steampipe CLI`.
-3. In "Add features & functionality", choose "Permissions".
-4. Grant permissions in a User token scope. This means the Slack App is acting on your behalf. See below for required scopes by table.
-5. (Re-)Install your app.
-6. Get the user oauth token for your team. It looks like `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`
 
 ### Permissions and Scopes
 
@@ -62,4 +72,14 @@ prefer.
 | `slack_emoji`        | `emoji:read`                                                                                                     |
 | `slack_group`        | `usergroups:read`                                                                                                |
 | `slack_search`       | `search:read`                                                                                                    |
-| `slack_user`         | `users:read`, `users:read.email`                                                                                 |
+| `slack_user`         | `users:read`, `users:read.email`               
+
+
+## Configuring Slack Credentials
+
+Need content here
+ 
+## Get Involved
+
+* Open source: https://github.com/turbot/steampipe-plugin-slack
+* Community: [Slack Channel](https://join.slack.com/t/steampipe/shared_invite/zt-oij778tv-lYyRTWOTMQYBVAbtPSWs3g) |
