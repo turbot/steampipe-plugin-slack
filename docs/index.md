@@ -17,7 +17,26 @@ og_image: "/images/plugins/turbot/slack-social-graphic.png"
 [Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
 
 For example:
-Placeholder for example query and table
+
+```sql
+select
+  email,
+  is_admin
+from
+  slack_user
+```
+
+```
++-----------------------+----------+
+| email                 | is_admin |
++-----------------------+----------+
+| john@mycompany.com    | false    |
+| mike@mycompany.com    | false    |
+| julia@mycompany.com   | false    |
+| zeke@mycompany.com    | false    |
+| charles@mycompany.com | false    |
++-----------------------+----------+
+```
 
 ## Documentation
 
