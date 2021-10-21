@@ -6,7 +6,7 @@ brand_color: "#7C2852"
 display_name: "Slack"
 short_name: "slack"
 description: "Steampipe plugin for querying Slack Conversations, Groups, Users, and other resources."
-og_description: "Query Slack with SQL! Open source CLI. No DB required." 
+og_description: "Query Slack with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/slack-social-graphic.png"
 ---
 
@@ -42,7 +42,7 @@ API tokens in Slack are associated with Apps. To use Steampipe, you need to crea
 3. Under "Add features & functionality", choose "Permissions".
 4. Grant permissions under User token scope. This means that the Slack App is acting on your behalf. </br> **_Refer the Permissions and Scopes section to determine the scope required for each table._
 6. Reinstall your app.
-7. Get the user OAuth token for your team. The OAuth token will look something like: `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`
+7. Get the user OAuth token for your team. The OAuth token will look something like: `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`.
 
 ### Permissions and Scopes
 
@@ -59,7 +59,7 @@ preferred.
 | `slack_emoji`        | `emoji:read`                                                                                                     |
 | `slack_group`        | `usergroups:read`                                                                                                |
 | `slack_search`       | `search:read`                                                                                                    |
-| `slack_user`         | `users:read`, `users:read.email`
+| `slack_user`         | `users:read`, `users:read.email`                                                                                 |
 
 ### Connection Configuration
 
@@ -73,8 +73,8 @@ Installing the latest slack plugin will create a connection file (`~/.steampipe/
     token   = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
   }
   ```
-  
+
 ## Get Involved
 
 * Open source: https://github.com/turbot/steampipe-plugin-slack
-* Community: [Slack Channel](https://join.slack.com/t/steampipe/shared_invite/zt-oij778tv-lYyRTWOTMQYBVAbtPSWs3g) |
+* Community: [Slack Channel](https://join.slack.com/t/steampipe/shared_invite/zt-oij778tv-lYyRTWOTMQYBVAbtPSWs3g)
