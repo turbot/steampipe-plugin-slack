@@ -56,12 +56,13 @@ steampipe plugin install slack
 
 API tokens in Slack are associated with Apps. To use Steampipe, you need to create an App in Slack with the appropriate permissions.
 
-1. Log in to the Slack website and view your exisitng apps by clicking on "Your apps" in the top right-hand corner.
-2. Create a new app for your workspace, e.g. `Steampipe CLI`.
-3. Under "Add features & functionality", choose "Permissions".
-4. Grant permissions under User token scope. This means that the Slack App is acting on your behalf. </br> **_Refer the Permissions and Scopes section to determine the scope required for each table._
+1. Log in to the [Slack](https://api.slack.com/apps/) website and view your exisitng apps by clicking on "Your apps" in the top right-hand corner.
+2. Create a new app for your workspace, e.g. `Steampipe CLI` and click on it.
+3. Under "Basic Information", click on "Add features & functionality" to expand this section.
+4. Choose "Permissions" and go to the "Scopes" section.
+5. Add scopes under "User Token Scopes". This means that the Slack App is acting on your behalf. </br> **_Refer the Permissions and Scopes section to determine the scope required for each table._
 6. Reinstall your app.
-7. Get the user OAuth token for your team. The OAuth token will look something like: `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`.
+7. Get the user OAuth token. The user OAuth token can be found under "OAuth & Permissions". The OAuth token will look something like: `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`.
 
 ### Permissions and Scopes
 
