@@ -52,7 +52,9 @@ Download and install the latest Slack plugin:
 steampipe plugin install slack
 ```
 
-### Credentials
+### Configuration
+
+Installing the latest Slack plugin will create a config file (~/.steampipe/config/slack.spc) with a single connection named slack. You must set your API token in this this connection in order to authenticate to Slack.
 
 API tokens in Slack are associated with Apps. To use Steampipe, you need to create an App in Slack with the appropriate permissions.
 
@@ -81,18 +83,35 @@ preferred.
 | `slack_search`       | `search:read`                                                                                                    |
 | `slack_user`         | `users:read`, `users:read.email`                                                                                 |
 
-### Connection Configuration
+### Example Configurations
 
-Connection configurations are defined using HCL in one or more Steampipe config files. Steampipe will load all configuration files from ~/.steampipe/config that have a .spc extension. A config file may contain multiple connections.
+- Connect to a single account:
 
-Installing the latest slack plugin will create a connection file (`~/.steampipe/config/slack.spc`) with a single connection named `slack`. You must set your API token in this this connection in order to authenticate to Slack:
+  ```hcl
+  connection "slack" {
+    plugin    = "slack"
+    token     = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
+  }
+  ```
 
-```hcl
-connection "slack" {
-  plugin    = "slack"
-  token     = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
-}
-```
+- Create connections to multiple accounts:
+
+  ```hcl
+  connection "slack_acc1" {
+    plugin    = "slack"
+    token     = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136a28"
+  }
+
+  connection "slack_acc2" {
+    plugin    = "slack"
+    token     = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b29"
+  }
+
+  connection "slack_acc3" {
+    plugin    = "slack"
+    token     = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136c30"
+  }
+  ```
 
 ## Get Involved
 
