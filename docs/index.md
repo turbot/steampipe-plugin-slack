@@ -54,15 +54,15 @@ steampipe plugin install slack
 
 ### Configuration
 
-Installing the latest Slack plugin will create a config file (`~/.steampipe/config/slack.spc`) with a single connection named `slack`. You must set your API token in this this connection in order to authenticate to Slack.  
-
-API tokens in Slack are associated with Apps. Visit https://api.slack.com/tutorials/tracks/getting-a-token to learn about how to create Slack Apps and generate API tokens.
+Installing the latest Slack plugin will create a config file (`~/.steampipe/config/slack.spc`) with a single connection named `slack`:
 
 ```hcl
 connection "slack" {
   plugin = "slack"
   
-  # token - (Required) API Token for your Slack account.
+  # API token for your Slack account
+  # See https://api.slack.com/tutorials/tracks/getting-a-token
+  # Can also be set via the SLACK_TOKEN environment variable
   # token = "xoxp-YOUR_TOKEN_HERE"
 }
 ```
