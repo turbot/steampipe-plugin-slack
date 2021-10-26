@@ -54,17 +54,18 @@ steampipe plugin install slack
 
 ### Configuration
 
-Installing the latest Slack plugin will create a config file (~/.steampipe/config/slack.spc) with a single connection named slack. You must set your API token in this this connection in order to authenticate to Slack.
+Installing the latest Slack plugin will create a config file (`~/.steampipe/config/slack.spc`) with a single connection named `slack`. You must set your API token in this this connection in order to authenticate to Slack.  
 
-API tokens in Slack are associated with Apps. To use Steampipe, you need to create an App in Slack with the appropriate permissions.
+API tokens in Slack are associated with Apps. Visit https://api.slack.com/tutorials/tracks/getting-a-token to learn about how to create Slack Apps and generate API tokens.
 
-1. Log in to the [Slack](https://api.slack.com/apps/) website and view your exisitng apps by clicking on "Your apps" in the top right-hand corner.
-2. Create a new app for your workspace, e.g. `Steampipe CLI` and click on it.
-3. Under "Basic Information", click on "Add features & functionality" to expand this section.
-4. Choose "Permissions" and go to the "Scopes" section.
-5. Add scopes under "User Token Scopes". This means that the Slack App is acting on your behalf. </br> **_Refer to the Permissions and Scopes section to determine the scope required for each table._
-6. Reinstall your app.
-7. Get the user OAuth token. The user OAuth token can be found under "OAuth & Permissions". The OAuth token will look something like: `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`.
+```hcl
+connection "slack" {
+  plugin = "slack"
+  
+  # token - (Required) API Token for your Slack account.
+  # token = "xoxp-YOUR_TOKEN_HERE"
+}
+```
 
 ### Permissions and Scopes
 
