@@ -59,10 +59,10 @@ Installing the latest Slack plugin will create a config file (`~/.steampipe/conf
 ```hcl
 connection "slack" {
   plugin = "slack"
-  
+
   # API token for your Slack account
-  # See https://api.slack.com/tutorials/tracks/getting-a-token
-  # Can also be set via the SLACK_TOKEN environment variable
+  # Reference: https://api.slack.com/tutorials/tracks/getting-a-token
+  # Env variables (in order of precedence): SLACK_TOKEN
   # token = "xoxp-YOUR_TOKEN_HERE"
 }
 ```
@@ -90,8 +90,8 @@ preferred.
 
   ```hcl
   connection "slack" {
-    plugin    = "slack"
-    token     = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
+    plugin = "slack"
+    token  = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27"
   }
   ```
 
@@ -99,18 +99,18 @@ preferred.
 
   ```hcl
   connection "slack_acc1" {
-    plugin    = "slack"
-    token     = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136a28"
+    plugin = "slack"
+    token  = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136a28"
   }
 
   connection "slack_acc2" {
-    plugin    = "slack"
-    token     = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b29"
+    plugin = "slack"
+    token  = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b29"
   }
 
   connection "slack_acc3" {
-    plugin    = "slack"
-    token     = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136c30"
+    plugin = "slack"
+    token  = "xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136c30"
   }
   ```
 
