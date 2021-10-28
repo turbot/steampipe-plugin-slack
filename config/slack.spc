@@ -1,8 +1,8 @@
 connection "slack" {
-  plugin    = "slack"
+  plugin = "slack"
 
   # API token for your Slack account
-  # See https://api.slack.com/tutorials/tracks/getting-a-token
-  # Can also be set via the SLACK_TOKEN environment variable
+  # Reference: https://api.slack.com/tutorials/tracks/getting-a-token
+  # Env variables (in order of precedence): SLACK_TOKEN
   # token = "xoxp-YOUR_TOKEN_HERE"
 }
