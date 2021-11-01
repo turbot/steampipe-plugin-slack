@@ -2,7 +2,7 @@
 
 # Slack Plugin for Steampipe
 
-Use SQL to query infrastructure including servers, networks, identity and more from Slack.
+Use SQL to query infrastructure including servers, networks, identity, and more from Slack.
 
 - **[Get started →](https://hub.steampipe.io/plugins/turbot/slack)** 
 - Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/slack/tables)
