@@ -40,7 +40,7 @@ from
 
 ## Documentation
 
-- **[Table definitions & examples →](https://hub.steampipe.io/plugins/turbot/slack/tables)**
+- **[Table definitions & examples →](/plugins/turbot/slack/tables)**
 
 ## Get started
 
