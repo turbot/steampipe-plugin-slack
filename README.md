@@ -4,7 +4,7 @@
 
 Use SQL to query infrastructure including servers, networks, identity, and more from Slack.
 
-- **[Get started →](https://hub.steampipe.io/plugins/turbot/slack)** 
+- **[Get started →](https://hub.steampipe.io/plugins/turbot/slack)**
 - Documentation: [Table definitions & examples](https://hub.steampipe.io/plugins/turbot/slack/tables)
 - Community: [Slack Channel](https://steampipe.io/community/join)
 - Get involved: [Issues](https://github.com/turbot/steampipe-plugin-slack/issues)
