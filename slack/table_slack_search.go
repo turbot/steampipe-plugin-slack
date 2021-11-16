@@ -65,12 +65,13 @@ func listSearches(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 	
 	msgs, err := plugin.RetryHydrate(ctx, d, h, listSearch, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
 
-	matches := msgs.([]slack.SearchMessage)
-
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_search.listSearches", "query_error", err)
 		return nil, err
 	}
+
+	matches := msgs.([]slack.SearchMessage)
+
 	for _, msg := range matches {
 		d.StreamListItem(ctx, msg)
 	}
@@ -84,6 +85,6 @@ func queryString(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData
 }
 
 func shouldRetryError(err error) bool {
-	plugin.Logger(gContext).Error("slack_search.listSearches", "retry_error", err)	
+	plugin.Logger(gContext).Error("slack_search.listSearches", "retry_error", err)
 	return true
 }
