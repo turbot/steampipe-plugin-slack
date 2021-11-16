@@ -10,6 +10,8 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/plugin/transform"
 )
 
+var gContext context.Context
+
 func tableSlackSearch() *plugin.Table {
 	return &plugin.Table{
 		Name:        "slack_search",
@@ -35,7 +37,10 @@ func tableSlackSearch() *plugin.Table {
 	}
 }
 
-func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func listSearches(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+
+	gContext = ctx
+
 	api, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_search.listSearches", "connection_error", err)
@@ -44,12 +49,29 @@ func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 	quals := d.KeyColumnQuals
 	q := quals["query"].GetStringValue()
 	params := slack.NewSearchParameters()
-	msgs, _, err := api.SearchContext(ctx, q, params)
+	params.Count = 100
+
+	listSearch := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+		plugin.Logger(ctx).Warn("slack_search", "retrying", "")
+		msgs, _, err := api.SearchContext(ctx, q, params)
+		plugin.Logger(ctx).Warn("slack_search", "api.SearchContext", err)
+		if err != nil {
+			return nil, err
+		}
+		matchedMessages := msgs.Matches
+		plugin.Logger(ctx).Warn("slack_search", "returning msgs: ", len(matchedMessages))
+		return matchedMessages, err
+	}
+	
+	msgs, err := plugin.RetryHydrate(ctx, d, h, listSearch, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+
+	matches := msgs.([]slack.SearchMessage)
+
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_search.listSearches", "query_error", err)
 		return nil, err
 	}
-	for _, msg := range msgs.Matches {
+	for _, msg := range matches {
 		d.StreamListItem(ctx, msg)
 	}
 	return nil, nil
@@ -59,4 +81,9 @@ func queryString(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData
 	quals := d.KeyColumnQuals
 	q := quals["query"].GetStringValue()
 	return q, nil
+}
+
+func shouldRetryError(err error) bool {
+	plugin.Logger(gContext).Error("slack_search.listSearches", "retry_error", err)	
+	return true
 }
