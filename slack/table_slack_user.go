@@ -104,9 +104,9 @@ func listUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) 
 }
 
 // NOTE:
-// * There is a inconsistent in GetUsersContext/GetUserInfoContext API for returning the custom field data of an user profile 
+// * There is an inconsistent in GetUsersContext/GetUserInfoContext API for returning the custom field data of an user profile 
 // * https://github.com/slack-go/slack/pull/298#discussion_r185159233 
-// * So we have added separate hydrated function to get user profile data specially
+// * So we have added separate hydrated function to get user profile field data specially
 
 func getUserProfile(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	api, err := connect(ctx, d)
