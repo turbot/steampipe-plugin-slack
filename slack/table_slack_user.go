@@ -120,7 +120,7 @@ func getUserProfile(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateD
 		return nil, nil
 	}
 
-	profile, err := api.GetUserProfileContext(ctx, userId, false)
+	profile, err := api.GetUserProfileContext(ctx, userId, true)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_user.getUserProfile", "api_error", err)
 		return nil, err
