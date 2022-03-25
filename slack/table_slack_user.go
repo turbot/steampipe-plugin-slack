@@ -29,6 +29,7 @@ func tableSlackUser() *plugin.Table {
 			//   difference between a user and a profile, so profile_* feels redundant.
 			// * Email requires the users:email.read oauth scope, so is often empty
 			// * The name field is deprecated by slack, so not as important as it appears.
+			// * The profile_field requires the users.profile:read oauth scope to get the data
 
 			// Top columns
 			{Name: "id", Type: proto.ColumnType_STRING, Description: "Unique identifier for the user."},
@@ -64,7 +65,7 @@ func tableSlackUser() *plugin.Table {
 			{Name: "job_title", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.Title").NullIfZero(), Description: "Job title of the user."},
 			//{Name: "name", Type: proto.ColumnType_STRING, Description: "Don't use this. It once indicated the preferred username for a user, but that behavior has fundamentally changed since."},
 			{Name: "phone", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.Phone").NullIfZero(), Description: "Phone number of the user."},
-			{Name: "profile_fields", Type: proto.ColumnType_JSON, Transform: transform.FromField("Profile.Fields"), Description: "Custom fields for the profile."},
+			{Name: "profile_fields", Type: proto.ColumnType_JSON, Hydrate: getUserProfile, Transform: transform.FromField("Fields"), Description: "Custom fields for the profile."},
 			{Name: "real_name", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.RealName").NullIfZero(), Description: "The real name that the user specified in their workspace profile."},
 			{Name: "real_name_normalized", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.RealNameNormalized").NullIfZero(), Description: "The real_name field, but with any non-Latin characters filtered out."},
 			{Name: "skype", Type: proto.ColumnType_STRING, Transform: transform.FromField("Profile.Skype").NullIfZero(), Description: "Skype handle of the user."},
@@ -100,6 +101,32 @@ func listUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) 
 		d.StreamListItem(ctx, user)
 	}
 	return nil, nil
+}
+
+// NOTE:
+// * There is a inconsistent in GetUsersContext/GetUserInfoContext API for returning the custom field data of an user profile 
+// * https://github.com/slack-go/slack/pull/298#discussion_r185159233 
+// * So we have added separate hydrated function to get user profile data specially
+
+func getUserProfile(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	api, err := connect(ctx, d)
+	if err != nil {
+		plugin.Logger(ctx).Error("slack_user.getUserProfile", "connection_error", err)
+		return nil, err
+	}
+
+	userId := getUserId(h.Item)
+	if userId == "" {
+		return nil, nil
+	}
+
+	profile, err := api.GetUserProfileContext(ctx, userId, false)
+	if err != nil {
+		plugin.Logger(ctx).Error("slack_user.getUserProfile", "api_error", err)
+		return nil, err
+	}
+
+	return profile, nil
 }
 
 func getUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
@@ -156,4 +183,16 @@ func getUserPresence(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrate
 		}
 	}
 	return nil, err
+}
+
+//// TRANSFORM FUNCTIONS
+
+func getUserId(item interface{}) string {
+	switch item := item.(type) {
+	case *slack.User:
+		return item.ID
+	case slack.User:
+		return item.ID
+	}
+	return ""
 }
