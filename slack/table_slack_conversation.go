@@ -21,7 +21,7 @@ func tableSlackConversation() *plugin.Table {
 			KeyColumns: plugin.SingleColumn("id"),
 			Hydrate:    getConversation,
 		},
-		Columns: []*plugin.Column{
+		Columns: slackCommonColumns([]*plugin.Column{
 
 			// Top columns
 			{Name: "id", Type: proto.ColumnType_STRING, Transform: transform.FromField("ID"), Description: "ID of the conversation."},
@@ -62,7 +62,7 @@ func tableSlackConversation() *plugin.Table {
 			//{Name: "unread_count", Type: proto.ColumnType_INT},
 			//{Name: "unread_count_display", Type: proto.ColumnType_INT},
 			//{Name: "user", Type: proto.ColumnType_STRING},
-		},
+		}),
 	}
 }
 

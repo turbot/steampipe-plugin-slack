@@ -22,7 +22,7 @@ func tableSlackUser() *plugin.Table {
 			KeyColumns: plugin.AnyColumn([]string{"id", "email"}),
 			Hydrate:    getUser,
 		},
-		Columns: []*plugin.Column{
+		Columns: slackCommonColumns([]*plugin.Column{
 
 			// NOTE:
 			// * Profile fields collapsed to top level, there is no meaningful
@@ -80,7 +80,7 @@ func tableSlackUser() *plugin.Table {
 			// These work, but are very heavy on the Slack API rate limit
 			//{Name: "presence", Type: proto.ColumnType_STRING, Hydrate: getUserPresence},
 			//{Name: "presence_online", Type: proto.ColumnType_BOOL, Hydrate: getUserPresence},
-		},
+		}),
 	}
 }
 

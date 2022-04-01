@@ -17,7 +17,7 @@ func tableSlackGroup() *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listGroups,
 		},
-		Columns: []*plugin.Column{
+		Columns: slackCommonColumns([]*plugin.Column{
 			{Name: "id", Type: proto.ColumnType_STRING, Description: "ID of the group."},
 			{Name: "team_id", Type: proto.ColumnType_STRING, Description: "Team ID the group is defined in."},
 			{Name: "is_user_group", Type: proto.ColumnType_BOOL, Description: "True if this is a user group."},
@@ -35,7 +35,7 @@ func tableSlackGroup() *plugin.Table {
 			{Name: "prefs", Type: proto.ColumnType_JSON, Description: "The prefs parameter contains default channels and groups (private channels) that members of this group will be invited to upon joining."},
 			{Name: "user_count", Type: proto.ColumnType_INT, Description: "Number of users in the group."},
 			{Name: "users", Type: proto.ColumnType_JSON, Description: "List of users (IDs) in the group."},
-		},
+		}),
 	}
 }
 

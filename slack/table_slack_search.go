@@ -18,7 +18,7 @@ func tableSlackSearch() *plugin.Table {
 			Hydrate:    listSearches,
 			KeyColumns: plugin.SingleColumn("query"),
 		},
-		Columns: []*plugin.Column{
+		Columns: slackCommonColumns([]*plugin.Column{
 			// Top columns
 			{Name: "query", Type: proto.ColumnType_STRING, Hydrate: queryString, Transform: transform.FromValue(), Description: "The search query."},
 			{Name: "type", Type: proto.ColumnType_STRING, Description: "Type of the artifact matching the search."},
@@ -31,7 +31,7 @@ func tableSlackSearch() *plugin.Table {
 			{Name: "timestamp", Type: proto.ColumnType_TIMESTAMP, Transform: transform.FromField("Timestamp").Transform(stringFloatToTime), Description: "Timestamp of the matching artifact."},
 			{Name: "user_id", Type: proto.ColumnType_STRING, Transform: transform.FromField("User"), Description: "ID of the user responsible for the matching text."},
 			{Name: "attachments", Type: proto.ColumnType_JSON, Description: "Attachments matching the query."},
-		},
+		}),
 	}
 }
 

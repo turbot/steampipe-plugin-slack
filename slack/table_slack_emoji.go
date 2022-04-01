@@ -14,10 +14,10 @@ func tableSlackEmoji() *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listEmojis,
 		},
-		Columns: []*plugin.Column{
+		Columns: slackCommonColumns([]*plugin.Column{
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Name of the emoji, used in message text."},
 			{Name: "url", Type: proto.ColumnType_STRING, Description: "URL of the emoji image."},
-		},
+		}),
 	}
 }
 
