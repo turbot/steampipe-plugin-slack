@@ -18,10 +18,8 @@ func connect(_ context.Context, d *plugin.QueryData) (*slack.Client, error) {
 	token := os.Getenv("SLACK_TOKEN")
 
 	slackConfig := GetConfig(d.Connection)
-	if &slackConfig != nil {
-		if slackConfig.Token != nil {
-			token = *slackConfig.Token
-		}
+	if slackConfig.Token != nil {
+		token = *slackConfig.Token
 	}
 
 	if token == "" {

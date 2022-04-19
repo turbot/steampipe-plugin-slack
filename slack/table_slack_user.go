@@ -2,7 +2,6 @@ package slack
 
 import (
 	"context"
-	"time"
 
 	"github.com/slack-go/slack"
 
@@ -135,25 +134,25 @@ func getUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (i
 	return info, nil
 }
 
-func getUserPresence(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx, d)
-	if err != nil {
-		return nil, err
-	}
-	user := h.Item.(slack.User)
-	for err == nil {
-		p, err := api.GetUserPresence(user.ID)
-		if err == nil {
-			return p, nil
-		}
-		if rateLimitedError, ok := err.(*slack.RateLimitedError); ok {
-			select {
-			case <-ctx.Done():
-				// Pass through
-			case <-time.After(rateLimitedError.RetryAfter):
-				err = nil
-			}
-		}
-	}
-	return nil, err
-}
+// func getUserPresence(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+// 	api, err := connect(ctx, d)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	user := h.Item.(slack.User)
+// 	for err == nil {
+// 		p, err := api.GetUserPresence(user.ID)
+// 		if err == nil {
+// 			return p, nil
+// 		}
+// 		if rateLimitedError, ok := err.(*slack.RateLimitedError); ok {
+// 			select {
+// 			case <-ctx.Done():
+// 				// Pass through
+// 			case <-time.After(rateLimitedError.RetryAfter):
+// 				err = nil
+// 			}
+// 		}
+// 	}
+// 	return nil, err
+// }
