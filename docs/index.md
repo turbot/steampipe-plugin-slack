@@ -6,6 +6,8 @@ brand_color: "#7C2852"
 display_name: "Slack"
 name: "slack"
 description: "Steampipe plugin for querying Slack Conversations, Groups, Users and other resources."
+og_description: "Query DigitalOcean with SQL! Open source CLI. No DB required."
+og_image: "/images/plugins/turbot/slack-social-graphic.png"
 ---
 
 # Slack
