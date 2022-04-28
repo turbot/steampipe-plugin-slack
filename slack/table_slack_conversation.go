@@ -73,7 +73,7 @@ func listConversations(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 		return nil, err
 	}
 	opts := &slack.GetConversationsParameters{Limit: 200, Types: []string{"public_channel", "private_channel", "im", "mpim"}}
-	for true {
+	for {
 		conversations, cursor, err := api.GetConversations(opts)
 		if err != nil {
 			plugin.Logger(ctx).Error("slack_user.listConversations", "query_error", err)
