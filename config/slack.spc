@@ -1,9 +1,7 @@
 connection "slack" {
-  plugin    = "slack" 
+  plugin = "slack"
 
-  # To use Steampipe, you need to create an App in Slack with the 
-  # appropriate permissions.  See the documentation at 
-  # https://hub.steampipe.io/plugins/turbot/slack for details.
-  #token   = "xoxp-YOUR_TOKEN_HERE"
-                
+  # The Slack app token used to connect to the API.
+  # Can also be set with the SLACK_TOKEN environment variable.
+  #token = "xoxp-YOUR_TOKEN_HERE"
 }
