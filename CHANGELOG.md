@@ -1,3 +1,13 @@
+## v0.4.1 [2022-05-12]
+
+_Enhancements_
+
+- Updated `config/slack.spc` and index doc with `token` argument environment variable information. ([#34](https://github.com/turbot/steampipe-plugin-slack/pull/34))
+
+_Bug fixes_
+
+- Fixed `og_description` in index doc front matter. ([#34](https://github.com/turbot/steampipe-plugin-slack/pull/34))
+
 ## v0.4.0 [2022-04-28]
 
 _Enhancements_
