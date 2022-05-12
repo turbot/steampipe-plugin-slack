@@ -52,7 +52,7 @@ Download and install the latest Slack plugin:
 steampipe plugin install slack
 ```
 
-## Credentials
+### Credentials
 
 API tokens in Slack are associated with Apps. To use Steampipe, you need to create an App in Slack with the appropriate permissions.
 
