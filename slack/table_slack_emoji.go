@@ -40,6 +40,11 @@ func listEmojis(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 	}
 	for name, url := range emojis {
 		d.StreamListItem(ctx, slackEmoji{Name: name, URL: url})
+
+		// Context may get cancelled due to manual cancellation or if the limit has been reached
+		if d.QueryStatus.RowsRemaining(ctx) == 0 {
+			return nil, nil
+		}
 	}
 	return nil, nil
 }
