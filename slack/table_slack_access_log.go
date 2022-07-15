@@ -44,6 +44,19 @@ func listAccessLogs(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateD
 	// crazy, so we limit it here to 10,000 records total.
 	params := slack.AccessLogParameters{Count: 1000}
 	maxPages := 5
+
+	// Reduce the basic request limit down if the user has only requested a small number of rows
+	limit := d.QueryContext.Limit
+	if d.QueryContext.Limit != nil {
+		if *limit < int64(params.Count) {
+			if *limit < 1 {
+				params.Count = 1
+			} else {
+				params.Count = int(*limit)
+			}
+		}
+	}
+
 	for params.Page <= maxPages {
 		accessLogs, paging, err := api.GetAccessLogsContext(ctx, params)
 		if err != nil {
@@ -52,6 +65,11 @@ func listAccessLogs(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateD
 		}
 		for _, accessLog := range accessLogs {
 			d.StreamListItem(ctx, accessLog)
+
+			// Context may get cancelled due to manual cancellation or if the limit has been reached
+			if d.QueryStatus.RowsRemaining(ctx) == 0 {
+				return nil, nil
+			}
 		}
 		if paging.Page >= paging.Pages {
 			break
