@@ -2,8 +2,11 @@
 
 _Enhancements_
 
-- Add pagination support to `slack_search` table. ([#40](https://github.com/turbot/steampipe-plugin-slack/pull/40))
 - Improve limit handling in `slack_access_log` and `slack_conversation` tables. ([#40](https://github.com/turbot/steampipe-plugin-slack/pull/40))
+
+_Bug fixes_
+
+- Add pagination support to `slack_search` table to allow more than 20 results to be returned. ([#40](https://github.com/turbot/steampipe-plugin-slack/pull/40))
 
 ## v0.6.0 [2022-07-07]
 
