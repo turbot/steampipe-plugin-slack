@@ -231,6 +231,8 @@ github.com/sethvargo/go-retry v0.1.0 h1:8sPqlWannzcReEcYjHSNw9becsiYudcwTD7CasGj
 github.com/sethvargo/go-retry v0.1.0/go.mod h1:JzIOdZqQDNpPkQDmcqgtteAcxFLtYpNF/zJCM1ysDg8=
 github.com/slack-go/slack v0.7.4 h1:Z+7CmUDV+ym4lYLA4NNLFIpr3+nDgViHrx8xsuXgrYs=
 github.com/slack-go/slack v0.7.4/go.mod h1:FGqNzJBmxIsZURAxh2a8D21AnOVvvXZvGligs4npPUM=
+github.com/slack-go/slack v0.11.2 h1:IWl90Rk+jqPEVyiBytH27CSN/TFAg2vuDDfoPRog/nc=
+github.com/slack-go/slack v0.11.2/go.mod h1:hlGi5oXA+Gt+yWTPP0plCdRKmjsDxecdHxYQdlMQKOw=
 github.com/spaolacci/murmur3 v0.0.0-20180118202830-f09979ecbc72/go.mod h1:JwIasOWyU6f++ZhiEuf87xNszmSA2myDM2Kzu9HwQUA=
 github.com/spf13/pflag v1.0.2/go.mod h1:DYY7MBk1bdzusC3SYhjObp+wFpr4gzcvqqNjLnInEg4=
 github.com/stevenle/topsort v0.0.0-20130922064739-8130c1d7596b h1:wJSBFlabo96ySlmSX0a02WAPyGxagzTo9c5sk3sHP3E=

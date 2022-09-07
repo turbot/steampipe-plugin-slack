@@ -3,7 +3,7 @@ module github.com/turbot/steampipe-plugin-slack
 go 1.18
 
 require (
-	github.com/slack-go/slack v0.7.4
+	github.com/slack-go/slack v0.11.2
 	github.com/turbot/steampipe-plugin-sdk/v3 v3.3.2
 )
 
