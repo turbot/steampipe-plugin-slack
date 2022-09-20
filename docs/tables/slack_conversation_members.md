@@ -26,5 +26,5 @@ from
 join
   slack_conversation_members b on a.id = b.id
 where
-  b.channel IN (select id from slack_conversation where is_general);
+  b.channel in (select id from slack_conversation where is_general);
 ```
