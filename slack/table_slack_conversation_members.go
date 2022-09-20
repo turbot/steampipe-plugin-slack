@@ -19,8 +19,8 @@ func tableSlackConversationMember() *plugin.Table {
 			Hydrate:    listConversationMembers,
 		},
 		Columns: []*plugin.Column{
-			{Name: "conversation_id", Type: proto.ColumnType_STRING, Transform: transform.FromField("Channel"), Description: "ID of the conversation to retrieve members for."},
-			{Name: "id", Type: proto.ColumnType_STRING, Transform: transform.FromField("ID"), Description: "Unique identifier for the user."},
+			{Name: "conversation_id", Type: proto.ColumnType_STRING, Transform: transform.FromField("ConversationID"), Description: "ID of the conversation to retrieve members for."},
+			{Name: "member_id", Type: proto.ColumnType_STRING, Transform: transform.FromField("MemberID"), Description: "Unique identifier for the user."},
 		},
 	}
 }
@@ -28,22 +28,22 @@ func tableSlackConversationMember() *plugin.Table {
 func listConversationMembers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	api, err := connect(ctx, d)
 	if err != nil {
-		plugin.Logger(ctx).Error("slack_conversation_members.listConversationMembers", "connection_error", err)
+		plugin.Logger(ctx).Error("slack_conversation_member.listConversationMembers", "connection_error", err)
 		return nil, err
 	}
-	channelID := d.KeyColumnQuals["channel"].GetStringValue()
-	opts := &slack.GetUsersInConversationParameters{ChannelID: channelID, Cursor: "", Limit: 1000}
+	conversationID := d.KeyColumnQuals["conversation_id"].GetStringValue()
+	opts := &slack.GetUsersInConversationParameters{ChannelID: conversationID, Cursor: "", Limit: 1000}
 
 	for {
 		members, cursor, err := api.GetUsersInConversation(opts)
 		if err != nil {
-			plugin.Logger(ctx).Error("slack_conversation_members.listConversationMembers", "query_error", err)
+			plugin.Logger(ctx).Error("slack_conversation_member.listConversationMembers", "query_error", err)
 			return nil, err
 		}
-		for _, conversation := range members {
+		for _, memberID := range members {
 			d.StreamListItem(ctx, member{
-				Channel: channelID,
-				ID:      conversation,
+				ConversationID: conversationID,
+				MemberID:       memberID,
 			})
 		}
 		if cursor == "" {
@@ -56,6 +56,6 @@ func listConversationMembers(ctx context.Context, d *plugin.QueryData, _ *plugin
 }
 
 type member struct {
-	Channel string
-	ID      string
+	ConversationID string
+	MemberID       string
 }
