@@ -13,7 +13,7 @@ select
 from
   slack_conversation_members
 where
-  channel IN (select id from slack_conversation where is_general);
+  channel in (select id from slack_conversation where is_general);
 ```
 
 ### Get the information of members in the #general channel
