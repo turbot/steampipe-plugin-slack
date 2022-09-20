@@ -20,7 +20,7 @@ func tableSlackConversationMember() *plugin.Table {
 		},
 		Columns: []*plugin.Column{
 			{Name: "conversation_id", Type: proto.ColumnType_STRING, Transform: transform.FromQual("conversation_id"), Description: "ID of the conversation to retrieve members for."},
-			{Name: "member_id", Type: proto.ColumnType_STRING, Transform: transform.FromField("MemberID"), Description: "Unique identifier for the user."},
+			{Name: "member_id", Type: proto.ColumnType_STRING, Transform: transform.FromValue(), Description: "Unique identifier for the user."},
 		},
 	}
 }
@@ -46,10 +46,7 @@ func listConversationMembers(ctx context.Context, d *plugin.QueryData, _ *plugin
 			return nil, err
 		}
 		for _, memberID := range members {
-			d.StreamListItem(ctx, member{
-				ConversationID: conversationID,
-				MemberID:       memberID,
-			})
+			d.StreamListItem(ctx, memberID)
 
 			// Context can be cancelled due to manual cancellation or the limit has been hit
 			if d.QueryStatus.RowsRemaining(ctx) == 0 {
@@ -63,9 +60,4 @@ func listConversationMembers(ctx context.Context, d *plugin.QueryData, _ *plugin
 	}
 
 	return nil, nil
-}
-
-type member struct {
-	ConversationID string
-	MemberID       string
 }
