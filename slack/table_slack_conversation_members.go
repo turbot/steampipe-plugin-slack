@@ -32,7 +32,12 @@ func listConversationMembers(ctx context.Context, d *plugin.QueryData, _ *plugin
 		return nil, err
 	}
 	conversationID := d.KeyColumnQuals["conversation_id"].GetStringValue()
-	opts := &slack.GetUsersInConversationParameters{ChannelID: conversationID, Cursor: "", Limit: 1000}
+	itemsPerPage := int64(100)
+	// Reduce the basic request limit down if the user has only requested a small number of rows
+	if d.QueryContext.Limit != nil && *d.QueryContext.Limit < itemsPerPage {
+		itemsPerPage = *d.QueryContext.Limit
+	}
+	opts := &slack.GetUsersInConversationParameters{ChannelID: conversationID, Cursor: "", Limit: int(itemsPerPage)}
 
 	for {
 		members, cursor, err := api.GetUsersInConversation(opts)
