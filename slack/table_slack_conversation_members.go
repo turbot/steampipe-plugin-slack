@@ -15,11 +15,11 @@ func tableSlackConversationMember() *plugin.Table {
 		Name:        "slack_conversation_member",
 		Description: "Retrieve members of a conversation.",
 		List: &plugin.ListConfig{
-			KeyColumns: plugin.SingleColumn("channel"),
+			KeyColumns: plugin.SingleColumn("conversation_id"),
 			Hydrate:    listConversationMembers,
 		},
 		Columns: []*plugin.Column{
-			{Name: "channel", Type: proto.ColumnType_STRING, Description: "ID of the conversation to retrieve members for."},
+			{Name: "conversation_id", Type: proto.ColumnType_STRING, Transform: transform.FromField("Channel"), Description: "ID of the conversation to retrieve members for."},
 			{Name: "id", Type: proto.ColumnType_STRING, Transform: transform.FromField("ID"), Description: "Unique identifier for the user."},
 		},
 	}
