@@ -45,6 +45,10 @@ func listConversationMembers(ctx context.Context, d *plugin.QueryData, _ *plugin
 				ConversationID: conversationID,
 				MemberID:       memberID,
 			})
+
+			if d.QueryStatus.RowsRemaining(ctx) == 0 {
+				return nil, nil
+			}
 		}
 		if cursor == "" {
 			break
