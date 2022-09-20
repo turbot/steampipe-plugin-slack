@@ -1,4 +1,4 @@
-# Table: slack_conversation_members
+# Table: slack_conversation_member
 
 Retrieve members of a conversation.
 

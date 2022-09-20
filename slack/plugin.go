@@ -19,7 +19,7 @@ func Plugin(_ context.Context) *plugin.Plugin {
 			"slack_access_log":           tableSlackAccessLog(),
 			"slack_connection":           tableSlackConnection(),
 			"slack_conversation":         tableSlackConversation(),
-			"slack_conversation_members": tableSlackConversationMembers(),
+			"slack_conversation_member": tableSlackConversationMember(),
 			"slack_search":               tableSlackSearch(),
 			"slack_emoji":                tableSlackEmoji(),
 			"slack_group":                tableSlackGroup(),

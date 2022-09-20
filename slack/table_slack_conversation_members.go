@@ -10,9 +10,9 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
-func tableSlackConversationMembers() *plugin.Table {
+func tableSlackConversationMember() *plugin.Table {
 	return &plugin.Table{
-		Name:        "slack_conversation_members",
+		Name:        "slack_conversation_member",
 		Description: "Retrieve members of a conversation.",
 		List: &plugin.ListConfig{
 			KeyColumns: plugin.SingleColumn("channel"),
