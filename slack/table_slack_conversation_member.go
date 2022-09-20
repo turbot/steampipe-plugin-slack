@@ -19,7 +19,7 @@ func tableSlackConversationMember() *plugin.Table {
 			Hydrate:    listConversationMembers,
 		},
 		Columns: []*plugin.Column{
-			{Name: "conversation_id", Type: proto.ColumnType_STRING, Transform: transform.FromField("ConversationID"), Description: "ID of the conversation to retrieve members for."},
+			{Name: "conversation_id", Type: proto.ColumnType_STRING, Transform: transform.FromQual("conversation_id"), Description: "ID of the conversation to retrieve members for."},
 			{Name: "member_id", Type: proto.ColumnType_STRING, Transform: transform.FromField("MemberID"), Description: "Unique identifier for the user."},
 		},
 	}

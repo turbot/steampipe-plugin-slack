@@ -20,13 +20,20 @@ where
 
 ```sql
 select
-  a.id, c.display_name, c.email, c.is_admin, c.is_bot, c.is_restricted
+  c.id,
+  u.display_name,
+  u.email,
+  u.is_admin,
+  u.is_bot,
+  u.is_restricted
 from
-  slack_conversation a
-join
-  slack_conversation_member b on a.id = b.conversation_id
-join
-  slack_user c on b.member_id = c.id
+  slack_conversation as c
+  join
+    slack_conversation_member as m
+    on c.id = m.conversation_id
+  join
+    slack_user as u
+    on m.member_id = u.id
 where
-  a.id in (select id from slack_conversation where is_general);
+  c.id in (select id from slack_conversation where is_general);
 ```
