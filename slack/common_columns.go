@@ -5,18 +5,18 @@ import (
 	"fmt"
 
 	"github.com/slack-go/slack"
-	"github.com/turbot/steampipe-plugin-sdk/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
-// column definitions for the common columns
+// Column definitions for the common columns
 func commonColumns() []*plugin.Column {
 	return []*plugin.Column{
 		{
 			Name:        "workspace_domain",
 			Type:        proto.ColumnType_STRING,
-			Hydrate:     getSlackWorkspace,
+			Hydrate:     getCommonColumns,
 			Description: "The domain name for the workspace.",
 			Transform:   transform.FromField("Domain"),
 		},
@@ -24,22 +24,20 @@ func commonColumns() []*plugin.Column {
 }
 
 func slackCommonColumns(columns []*plugin.Column) []*plugin.Column {
-	return append(commonColumns(), columns...)
+	return append(columns, commonColumns()...)
 }
 
-// struct to store the common column data
-// Currently we are using the domain column rest of the date is for future use
+// Struct to store the common column data
+// Currently we are only using the domain info, but can add more as columns if
+// required
 type WorkspaceInfo struct {
 	Name        string
-	Id          string
+	ID          string
 	Domain      string
 	EmailDomain string
-	URL         string
 }
 
-// get columns which are returned with all tables: workspace_name, workspace_id, workspace_domain and workspace_email_domain
-func getSlackWorkspace(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-
+func getCommonColumns(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var workspaceInfo *WorkspaceInfo
 	getTeamInfoCached := plugin.HydrateFunc(getTeamInfo).WithCache()
 	workspaceData, err := getTeamInfoCached(ctx, d, h)
@@ -50,10 +48,9 @@ func getSlackWorkspace(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 	workspace := workspaceData.(*slack.TeamInfo)
 	workspaceInfo = &WorkspaceInfo{
 		Name:        workspace.Name,
-		Id:          workspace.ID,
+		ID:          workspace.ID,
 		Domain:      workspace.Domain,
 		EmailDomain: workspace.EmailDomain,
-		URL:         "https://" + workspace.Domain + ".slack.com",
 	}
 
 	return workspaceInfo, nil
@@ -61,7 +58,7 @@ func getSlackWorkspace(ctx context.Context, d *plugin.QueryData, h *plugin.Hydra
 
 func getTeamInfo(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// have we already created and cached the data?
-	cacheKey := fmt.Sprintf("workspace-info")
+	cacheKey := fmt.Sprintf("getTeamInfo")
 	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
 		return cachedData.(*slack.TeamInfo), nil
 	}
@@ -74,7 +71,7 @@ func getTeamInfo(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData
 
 	data, err := api.GetTeamInfo()
 	if err != nil {
-		plugin.Logger(ctx).Error("getTeamInfo", "response", err)
+		plugin.Logger(ctx).Error("getTeamInfo", "api_error", err)
 		return nil, err
 	}
 

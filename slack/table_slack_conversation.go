@@ -22,7 +22,6 @@ func tableSlackConversation() *plugin.Table {
 			Hydrate:    getConversation,
 		},
 		Columns: slackCommonColumns([]*plugin.Column{
-
 			// Top columns
 			{Name: "id", Type: proto.ColumnType_STRING, Transform: transform.FromField("ID"), Description: "ID of the conversation."},
 			{Name: "name", Type: proto.ColumnType_STRING, Description: "Name of the conversation."},

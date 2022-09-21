@@ -22,7 +22,6 @@ func tableSlackUser() *plugin.Table {
 			Hydrate:    getUser,
 		},
 		Columns: slackCommonColumns([]*plugin.Column{
-
 			// NOTE:
 			// * Profile fields collapsed to top level, there is no meaningful
 			//   difference between a user and a profile, so profile_* feels redundant.
