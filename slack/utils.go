@@ -10,18 +10,16 @@ import (
 
 	"github.com/slack-go/slack"
 
-	"github.com/turbot/steampipe-plugin-sdk/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
 func connect(_ context.Context, d *plugin.QueryData) (*slack.Client, error) {
 	token := os.Getenv("SLACK_TOKEN")
 
 	slackConfig := GetConfig(d.Connection)
-	if &slackConfig != nil {
-		if slackConfig.Token != nil {
-			token = *slackConfig.Token
-		}
+	if slackConfig.Token != nil {
+		token = *slackConfig.Token
 	}
 
 	if token == "" {

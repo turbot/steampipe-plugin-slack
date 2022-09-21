@@ -1,3 +1,48 @@
+## v0.8.0 [2022-07-22]
+
+_Dependencies_
+
+- Recompiled plugin with [steampipe-plugin-sdk v3.3.2](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v332--2022-07-11) which includes several caching fixes. ([#41](https://github.com/turbot/steampipe-plugin-slack/pull/41))
+
+## v0.7.0 [2022-07-15]
+
+_Enhancements_
+
+- Improve limit handling in `slack_access_log` and `slack_conversation` tables. ([#40](https://github.com/turbot/steampipe-plugin-slack/pull/40))
+
+_Bug fixes_
+
+- Add pagination support to `slack_search` table to allow more than 20 results to be returned. ([#40](https://github.com/turbot/steampipe-plugin-slack/pull/40))
+
+## v0.6.0 [2022-07-07]
+
+_Enhancements_
+
+- Recompiled plugin with [steampipe-plugin-sdk v3.3.1](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v331--2022-06-30) which includes several caching fixes. ([#37](https://github.com/turbot/steampipe-plugin-slack/pull/37))
+
+## v0.5.0 [2022-06-24]
+
+_Enhancements_
+
+- Recompiled plugin with [steampipe-plugin-sdk v3.3.0](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v330--2022-06-22). ([#35](https://github.com/turbot/steampipe-plugin-slack/pull/35))
+
+## v0.4.1 [2022-05-12]
+
+_Enhancements_
+
+- Updated `config/slack.spc` and index doc with `token` argument environment variable information. ([#34](https://github.com/turbot/steampipe-plugin-slack/pull/34))
+
+_Bug fixes_
+
+- Fixed `og_description` in index doc front matter. ([#34](https://github.com/turbot/steampipe-plugin-slack/pull/34))
+
+## v0.4.0 [2022-04-28]
+
+_Enhancements_
+
+- Added support for native Linux ARM and Mac M1 builds. ([#32](https://github.com/turbot/steampipe-plugin-slack/pull/32))
+- Recompiled plugin with [steampipe-plugin-sdk v3.1.0](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v310--2022-03-30) and Go version `1.18`. ([#31](https://github.com/turbot/steampipe-plugin-slack/pull/31))
+
 ## v0.3.0 [2021-11-23]
 
 _Enhancements_

@@ -2,13 +2,12 @@ package slack
 
 import (
 	"context"
-	"time"
 
 	"github.com/slack-go/slack"
 
-	"github.com/turbot/steampipe-plugin-sdk/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
 )
 
 func tableSlackUser() *plugin.Table {
@@ -98,6 +97,11 @@ func listUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) 
 	}
 	for _, user := range users {
 		d.StreamListItem(ctx, user)
+
+		// Context may get cancelled due to manual cancellation or if the limit has been reached
+		if d.QueryStatus.RowsRemaining(ctx) == 0 {
+			return nil, nil
+		}
 	}
 	return nil, nil
 }
@@ -135,25 +139,25 @@ func getUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (i
 	return info, nil
 }
 
-func getUserPresence(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-	api, err := connect(ctx, d)
-	if err != nil {
-		return nil, err
-	}
-	user := h.Item.(slack.User)
-	for err == nil {
-		p, err := api.GetUserPresence(user.ID)
-		if err == nil {
-			return p, nil
-		}
-		if rateLimitedError, ok := err.(*slack.RateLimitedError); ok {
-			select {
-			case <-ctx.Done():
-				// Pass through
-			case <-time.After(rateLimitedError.RetryAfter):
-				err = nil
-			}
-		}
-	}
-	return nil, err
-}
+// func getUserPresence(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+// 	api, err := connect(ctx, d)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	user := h.Item.(slack.User)
+// 	for err == nil {
+// 		p, err := api.GetUserPresence(user.ID)
+// 		if err == nil {
+// 			return p, nil
+// 		}
+// 		if rateLimitedError, ok := err.(*slack.RateLimitedError); ok {
+// 			select {
+// 			case <-ctx.Done():
+// 				// Pass through
+// 			case <-time.After(rateLimitedError.RetryAfter):
+// 				err = nil
+// 			}
+// 		}
+// 	}
+// 	return nil, err
+// }
