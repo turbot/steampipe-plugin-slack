@@ -2,7 +2,6 @@ package slack
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/slack-go/slack"
 	"github.com/turbot/steampipe-plugin-sdk/v3/grpc/proto"
@@ -58,7 +57,7 @@ func getCommonColumns(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrat
 
 func getTeamInfo(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// have we already created and cached the data?
-	cacheKey := fmt.Sprintf("getTeamInfo")
+	cacheKey := "getTeamInfo"
 	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
 		return cachedData.(*slack.TeamInfo), nil
 	}
