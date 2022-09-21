@@ -3,7 +3,7 @@ module github.com/turbot/steampipe-plugin-slack
 go 1.18
 
 require (
-	github.com/slack-go/slack v0.7.4
+	github.com/slack-go/slack v0.11.3
 	github.com/turbot/steampipe-plugin-sdk/v3 v3.3.2
 )
 
@@ -23,7 +23,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/golang/glog v1.0.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/gorilla/websocket v1.4.2 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.7.0 // indirect
 	github.com/hashicorp/go-hclog v1.2.0 // indirect
 	github.com/hashicorp/go-plugin v1.4.4 // indirect

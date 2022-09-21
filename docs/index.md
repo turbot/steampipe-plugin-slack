@@ -70,15 +70,16 @@ Steampipe requires different permissions for each table. We recommend granting a
 of the scopes in the table below, but you can restrict them to specific tables if you
 prefer.
 
-| Table                | Scope Required                                                                                                   |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `slack_access_log`   | `admin` ([paid plan required](https://slack.com/help/articles/360002084807-View-Access-Logs-for-your-workspace)) |
-| `slack_connection`   | _None_                                                                                                           |
-| `slack_conversation` | `channels:read`, `groups:read`, `im:read`, `mpim:read`                                                           |
-| `slack_emoji`        | `emoji:read`                                                                                                     |
-| `slack_group`        | `usergroups:read`                                                                                                |
-| `slack_search`       | `search:read`                                                                                                    |
-| `slack_user`         | `users:read`, `users:read.email`                                                                                 |
+| Table                        | Scope Required                                                                                                   |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `slack_access_log`           | `admin` ([paid plan required](https://slack.com/help/articles/360002084807-View-Access-Logs-for-your-workspace)) |
+| `slack_connection`           | _None_                                                                                                           |
+| `slack_conversation`         | `channels:read`, `groups:read`, `im:read`, `mpim:read`                                                           |
+| `slack_conversation_member`  | `channels:read`, `groups:read`, `im:read`, `mpim:read`                                                           |
+| `slack_emoji`                | `emoji:read`                                                                                                     |
+| `slack_group`                | `usergroups:read`                                                                                                |
+| `slack_search`               | `search:read`                                                                                                    |
+| `slack_user`                 | `users:read`, `users:read.email`                                                                                 |
 
 ### Configuration
 
