@@ -18,10 +18,10 @@ func tableSlackConversationMember() *plugin.Table {
 			KeyColumns: plugin.SingleColumn("conversation_id"),
 			Hydrate:    listConversationMembers,
 		},
-		Columns: []*plugin.Column{
+		Columns: slackCommonColumns([]*plugin.Column{
 			{Name: "conversation_id", Type: proto.ColumnType_STRING, Transform: transform.FromQual("conversation_id"), Description: "ID of the conversation to retrieve members for."},
 			{Name: "member_id", Type: proto.ColumnType_STRING, Transform: transform.FromValue(), Description: "Unique identifier for the user."},
-		},
+		}),
 	}
 }
 

@@ -14,7 +14,7 @@ func tableSlackConnection() *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listConnections,
 		},
-		Columns: []*plugin.Column{
+		Columns: slackCommonColumns([]*plugin.Column{
 			// Top columns
 			{Name: "url", Type: proto.ColumnType_STRING, Description: "URL of the workspace."},
 			{Name: "team", Type: proto.ColumnType_STRING, Description: "Name of the workspace team."},
@@ -23,7 +23,7 @@ func tableSlackConnection() *plugin.Table {
 			{Name: "user_id", Type: proto.ColumnType_STRING, Description: "ID of the user making the connection."},
 			{Name: "enterprise_id", Type: proto.ColumnType_STRING, Description: "ID of the enterprise grid. null if not an enterprise workspace."},
 			{Name: "bot_id", Type: proto.ColumnType_STRING, Description: "ID of the bot making the connection. null if not a bot."},
-		},
+		}),
 	}
 }
 

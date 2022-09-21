@@ -17,7 +17,7 @@ func tableSlackAccessLog() *plugin.Table {
 		List: &plugin.ListConfig{
 			Hydrate: listAccessLogs,
 		},
-		Columns: []*plugin.Column{
+		Columns: slackCommonColumns([]*plugin.Column{
 			// Top columns
 			{Name: "user_id", Type: proto.ColumnType_STRING, Description: "Unique identifier of the user"},
 			{Name: "user_name", Type: proto.ColumnType_STRING, Transform: transform.FromField("Username"), Description: "Name of the user."},
@@ -31,7 +31,7 @@ func tableSlackAccessLog() *plugin.Table {
 			{Name: "isp", Type: proto.ColumnType_STRING, Transform: transform.FromField("ISP"), Description: "ISP the login originated from, if available. Often null."},
 			{Name: "region", Type: proto.ColumnType_STRING, Description: "Region the login originated from, if available. Often null."},
 			{Name: "user_agent", Type: proto.ColumnType_STRING, Description: "User agent of the device used for login."},
-		},
+		}),
 	}
 }
 
