@@ -1,3 +1,23 @@
+## v0.9.0 [2022-09-21]
+
+_What's new?_
+
+- New tables added
+  - [slack_conversation_member](https://hub.steampipe.io/plugins/turbot/slack/tables/slack_conversation_member) ([#44](https://github.com/turbot/steampipe-plugin-slack/pull/44)) (Thanks to [@ygpark80](https://github.com/ygpark80) for the contribution!)
+
+_Enhancements_
+
+- Added `workspace_domain` column to all tables. Please note that the `team:read` scope is required to query this column. ([#29](https://github.com/turbot/steampipe-plugin-slack/pull/29))
+
+_Bug fixes_
+
+- Fixed `slack_search` table queries never completing successfully if no search items are found.
+
+_Dependencies_
+
+- Recompiled plugin with [steampipe-plugin-sdk v4.1.7](https://github.com/turbot/steampipe-plugin-sdk/blob/main/CHANGELOG.md#v417-2022-09-08) which includes several caching and memory management improvements.
+- Recompiled plugin with Go version `1.19`.
+
 ## v0.8.0 [2022-07-22]
 
 _Dependencies_
