@@ -10,8 +10,8 @@ import (
 
 	"github.com/slack-go/slack"
 
-	"github.com/turbot/steampipe-plugin-sdk/v3/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v3/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
 )
 
 func connect(_ context.Context, d *plugin.QueryData) (*slack.Client, error) {
