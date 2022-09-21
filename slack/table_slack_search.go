@@ -60,6 +60,7 @@ func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 	}
 
 	for pagesLeft {
+
 		msgs, _, err := api.SearchContext(ctx, q, params)
 		if err != nil {
 			plugin.Logger(ctx).Error("slack_search.listSearches", "query_error", err)
@@ -75,7 +76,8 @@ func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 			}
 		}
 
-		if msgs.Paging.Pages != params.Page {
+		// If no results are returned, msgs.Paging.Pages is 0
+		if msgs.Paging.Pages > 0 && msgs.Paging.Pages != params.Page {
 			pagesLeft = true
 			params.Page = params.Page + 1
 		} else {
