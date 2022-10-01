@@ -12,7 +12,7 @@ og_image: "/images/plugins/turbot/slack-social-graphic.png"
 
 # Slack + Steampipe
 
-[Slack](https://slack.com/) s a messaging program designed specifically for the workplace.
+[Slack](https://slack.com/) is a messaging program designed specifically for the workplace.
 
 [Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
 
