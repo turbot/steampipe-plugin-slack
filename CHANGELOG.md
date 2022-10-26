@@ -1,3 +1,13 @@
+## v0.9.1 [2022-10-26]
+
+_Enhancements_
+
+- Updated instructions on creating credentials and required scopes in the index document.
+
+_Bug fixes_
+
+- Fixed typo in the index document. ([#45](https://github.com/turbot/steampipe-plugin-slack/pull/45)) (Thanks [@giant995](https://github.com/giant995) for catching it!)
+
 ## v0.9.0 [2022-09-21]
 
 _What's new?_
