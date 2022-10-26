@@ -56,12 +56,16 @@ steampipe plugin install slack
 
 API tokens in Slack are associated with Apps. To use Steampipe, you need to create an App in Slack with the appropriate permissions.
 
-1. Sign in to the Slack website, and view Your Apps at https://api.slack.com/apps.
-2. Create New App for your workspace, e.g., `Steampipe CLI`.
-3. In "Add features & functionality", choose "Permissions".
-4. Grant permissions in a User token scope. This means the Slack App is acting on your behalf. See below for required scopes by table.
-5. (Re-)Install your app.
-6. Get the user OAuth token for your team. It looks like `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`.
+1. Sign in to the Slack website, and view "Your Apps" at https://api.slack.com/apps.
+2. Select **Create New App**.
+3. Select **From scratch**.
+4. Enter an application name, e.g., `Steampipe CLI`, and select your workspace.
+5. Select **Add features & functionality**.
+6. Select **Permissions**.
+7. Scroll down to "Scopes" and then "User Token Scopes".
+8. Add permissions by scope, using the table below to grant the required read access.
+9. Scroll up to "OAuth Tokens for Your Workspace" and (re)install your app.
+10. Copy the user OAuth token for the application. It looks like `xoxp-2556146250-EXAMPLE-1646968370949-df954218b5da5b8614c85cc454136b27`.
 
 ### Permissions and Scopes
 
@@ -70,10 +74,11 @@ Steampipe requires different permissions for each table. We recommend granting
 the `team:read` scope and all of the scopes in the table below, but you can
 restrict them to specific tables if you prefer.
 
-Note: All tables will only require the `team:read` scope if querying the `workspace_domain` column.
+Please note that if you add or update scopes to an application, you will need to reinstall the application to the workspace for the changes to take effect.
 
 | Table                       | Scopes Required                                                                                                  |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| All tables                  | `team:read` (if querying the `workspace_domain` column)                                                          |
 | `slack_access_log`          | `admin` ([paid plan required](https://slack.com/help/articles/360002084807-View-Access-Logs-for-your-workspace)) |
 | `slack_connection`          | _None_                                                                                                           |
 | `slack_conversation`        | `channels:read`, `groups:read`, `im:read`, `mpim:read`                                                           |
