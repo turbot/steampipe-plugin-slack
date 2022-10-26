@@ -74,7 +74,7 @@ Steampipe requires different permissions for each table. We recommend granting
 the `team:read` scope and all of the scopes in the table below, but you can
 restrict them to specific tables if you prefer.
 
-Please note that if you add or update scopes to an application, you will need to reinstall the application to the workspace for the changes to take effect.
+Please note that if you add scopes to an application, you will need to reinstall the application to the workspace for the changes to take effect.
 
 | Table                       | Scopes Required                                                                                                  |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------- |
