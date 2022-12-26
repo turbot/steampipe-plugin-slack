@@ -3,6 +3,8 @@ package slack
 import (
 	"context"
 
+	"math"
+
 	"github.com/slack-go/slack"
 
 	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
@@ -88,8 +90,22 @@ func listUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) 
 		plugin.Logger(ctx).Error("slack_user.listUsers", "connection_error", err)
 		return nil, err
 	}
-	// NOTE: This API does automatic paging
-	users, err := api.GetUsersContext(ctx)
+	limit := int(d.QueryContext.GetLimit())
+
+	var users []slack.User
+	var options slack.GetUsersOption
+	if limit > -1 {
+		// Use 200 as default API limit, as recommended in the docs
+		options = slack.GetUsersOptionLimit(int(math.Min(float64(limit), 200)))
+	}
+
+	// Paginate ourselves instead of api.GetUsersContext to respect the query's limit
+	for len(users) < limit && err == nil {
+		p := api.GetUsersPaginated(options)
+		p, err = p.Next(ctx)
+		users = append(users, p.Users...)
+	}
+
 	if err != nil {
 		plugin.Logger(ctx).Warn("slack_user.listUsers", "query_error", err)
 		return nil, err
