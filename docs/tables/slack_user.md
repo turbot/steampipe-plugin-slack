@@ -85,5 +85,5 @@ select
  (regexp_match(tz, '^(.+)/')) [ 1 ] as region,
  updated
 from
-  slack.slack_user;
+  slack_user;
 ```
