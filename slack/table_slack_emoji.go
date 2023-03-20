@@ -3,8 +3,8 @@ package slack
 import (
 	"context"
 
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 )
 
 func tableSlackEmoji() *plugin.Table {
@@ -42,7 +42,7 @@ func listEmojis(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData)
 		d.StreamListItem(ctx, slackEmoji{Name: name, URL: url})
 
 		// Context may get cancelled due to manual cancellation or if the limit has been reached
-		if d.QueryStatus.RowsRemaining(ctx) == 0 {
+		if d.RowsRemaining(ctx) == 0 {
 			return nil, nil
 		}
 	}
