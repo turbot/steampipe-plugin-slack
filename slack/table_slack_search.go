@@ -5,9 +5,9 @@ import (
 
 	"github.com/slack-go/slack"
 
-	"github.com/turbot/steampipe-plugin-sdk/v4/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v4/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
 func tableSlackSearch() *plugin.Table {
@@ -41,7 +41,7 @@ func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 		plugin.Logger(ctx).Error("slack_search.listSearches", "connection_error", err)
 		return nil, err
 	}
-	quals := d.KeyColumnQuals
+	quals := d.EqualsQuals
 	q := quals["query"].GetStringValue()
 	params := slack.NewSearchParameters()
 	params.Count = 1000
@@ -71,7 +71,7 @@ func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 			d.StreamListItem(ctx, msg)
 
 			// Context may get cancelled due to manual cancellation or if the limit has been reached
-			if d.QueryStatus.RowsRemaining(ctx) == 0 {
+			if d.RowsRemaining(ctx) == 0 {
 				return nil, nil
 			}
 		}
@@ -89,7 +89,7 @@ func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 }
 
 func queryString(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
-	quals := d.KeyColumnQuals
+	quals := d.EqualsQuals
 	q := quals["query"].GetStringValue()
 	return q, nil
 }
