@@ -91,34 +91,34 @@ func listUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) 
 
 	// Use 200 as default API limit, as recommended in the docs
 	pageLimit := 200
-	limit := int(d.QueryContext.GetLimit())
-
-	if limit < pageLimit {
-		pageLimit = limit
+	if d.QueryContext.Limit != nil {
+		limit := int(*d.QueryContext.Limit)
+		if limit < pageLimit {
+			pageLimit = limit
+		}
 	}
 
 	// Paginate ourselves instead of api.GetUsersContext to respect the query's limit
-	var users []slack.User
-	for (limit == -1 || len(users) < limit) && err == nil {
-		p := api.GetUsersPaginated(slack.GetUsersOptionLimit(pageLimit))
+	p := api.GetUsersPaginated(slack.GetUsersOptionLimit(pageLimit))
+	for {
 		p, err = p.Next(ctx)
-		if err == nil {
-			users = append(users, p.Users...)
+		if p.Done(err) {
+			break
+		}
+		if err != nil {
+			plugin.Logger(ctx).Warn("slack_user.listUsers", "query_error", err)
+			return nil, err
+		}
+		for _, user := range p.Users {
+			d.StreamListItem(ctx, user)
+
+			// Context may get cancelled due to manual cancellation or if the limit has been reached
+			if d.RowsRemaining(ctx) == 0 {
+				return nil, nil
+			}
 		}
 	}
 
-	if err != nil {
-		plugin.Logger(ctx).Warn("slack_user.listUsers", "query_error", err)
-		return nil, err
-	}
-	for _, user := range users {
-		d.StreamListItem(ctx, user)
-
-		// Context may get cancelled due to manual cancellation or if the limit has been reached
-		if d.RowsRemaining(ctx) == 0 {
-			return nil, nil
-		}
-	}
 	return nil, nil
 }
 
