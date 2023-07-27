@@ -48,14 +48,10 @@ func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 	pagesLeft := true
 
 	// Reduce the basic request limit down if the user has only requested a small number of rows
-	limit := d.QueryContext.Limit
 	if d.QueryContext.Limit != nil {
+		limit := d.QueryContext.Limit
 		if *limit < int64(params.Count) {
-			if *limit < 1 {
-				params.Count = 1
-			} else {
-				params.Count = int(*limit)
-			}
+			params.Count = int(*limit)
 		}
 	}
 

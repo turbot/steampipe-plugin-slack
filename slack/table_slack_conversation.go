@@ -74,14 +74,10 @@ func listConversations(ctx context.Context, d *plugin.QueryData, _ *plugin.Hydra
 	opts := &slack.GetConversationsParameters{Limit: 1000, Types: []string{"public_channel", "private_channel", "im", "mpim"}}
 
 	// Reduce the basic request limit down if the user has only requested a small number of rows
-	limit := d.QueryContext.Limit
 	if d.QueryContext.Limit != nil {
+		limit := d.QueryContext.Limit
 		if *limit < int64(opts.Limit) {
-			if *limit < 1 {
-				opts.Limit = 1
-			} else {
-				opts.Limit = int(*limit)
-			}
+			opts.Limit = int(*limit)
 		}
 	}
 
