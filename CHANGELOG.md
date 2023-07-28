@@ -2,7 +2,11 @@
 
 _Bug fixes_
 
-- Fixed the pagination in various tables. ([#53](https://github.com/turbot/steampipe-plugin-slack/pull/53))
+- Fixed pagination in the following tables: ([#53](https://github.com/turbot/steampipe-plugin-slack/pull/53))
+  - `slack_access_log`
+  - `slack_conversation`
+  - `slack_conversation_member`
+  - `slack_search`
 
 ## v0.10.0 [2023-04-06]
 
