@@ -98,7 +98,7 @@ func listUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) 
 		}
 	}
 
-	// Paginate ourselves instead of api.GetUsersContext to respect the query's limit
+	// Handle pagination manually instead of using api.GetUsersContext to respect the query's limit
 	p := api.GetUsersPaginated(slack.GetUsersOptionLimit(pageLimit))
 	for {
 		p, err = p.Next(ctx)
