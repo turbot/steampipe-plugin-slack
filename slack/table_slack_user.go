@@ -140,13 +140,13 @@ func getUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (i
 	} else if len(email) > 0 {
 		info, err = api.GetUserByEmailContext(ctx, email)
 	} else {
-		plugin.Logger(ctx).Warn("slack_user.getUser", "invalid_quals", "id and email both empty", "quals", quals)
+		plugin.Logger(ctx).Error("slack_user.getUser", "invalid_quals", "id and email both empty", "quals", quals)
 		return nil, nil
 	}
 
 	if err != nil {
 		if err.Error() == "user_not_found" || err.Error() == "users_not_found" {
-			plugin.Logger(ctx).Warn("slack_user.getUser", "not_found_error", err, "quals", quals)
+			plugin.Logger(ctx).Error("slack_user.getUser", "not_found_error", err, "quals", quals)
 			return nil, nil
 		}
 		plugin.Logger(ctx).Error("slack_user.getUser", "query_error", err, "quals", quals)
