@@ -1,3 +1,9 @@
+## v0.10.1 [2023-07-28]
+
+_Bug fixes_
+
+- Fixed pagination in the `slack_user` table. ([#53](https://github.com/turbot/steampipe-plugin-slack/pull/57)) (Thanks [@japborst](https://github.com/japborst) for the contribution!!)
+
 ## v0.10.0 [2023-04-06]
 
 _Dependencies_
