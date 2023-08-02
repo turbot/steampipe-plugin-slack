@@ -88,20 +88,37 @@ func listUsers(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) 
 		plugin.Logger(ctx).Error("slack_user.listUsers", "connection_error", err)
 		return nil, err
 	}
-	// NOTE: This API does automatic paging
-	users, err := api.GetUsersContext(ctx)
-	if err != nil {
-		plugin.Logger(ctx).Warn("slack_user.listUsers", "query_error", err)
-		return nil, err
-	}
-	for _, user := range users {
-		d.StreamListItem(ctx, user)
 
-		// Context may get cancelled due to manual cancellation or if the limit has been reached
-		if d.RowsRemaining(ctx) == 0 {
-			return nil, nil
+	// Use 200 as default API limit, as recommended in the docs
+	pageLimit := 200
+	if d.QueryContext.Limit != nil {
+		limit := int(*d.QueryContext.Limit)
+		if limit < pageLimit {
+			pageLimit = limit
 		}
 	}
+
+	// Handle pagination manually instead of using api.GetUsersContext to respect the query's limit
+	p := api.GetUsersPaginated(slack.GetUsersOptionLimit(pageLimit))
+	for {
+		p, err = p.Next(ctx)
+		if p.Done(err) {
+			break
+		}
+		if err != nil {
+			plugin.Logger(ctx).Warn("slack_user.listUsers", "query_error", err)
+			return nil, err
+		}
+		for _, user := range p.Users {
+			d.StreamListItem(ctx, user)
+
+			// Context may get cancelled due to manual cancellation or if the limit has been reached
+			if d.RowsRemaining(ctx) == 0 {
+				return nil, nil
+			}
+		}
+	}
+
 	return nil, nil
 }
 
@@ -123,13 +140,13 @@ func getUser(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (i
 	} else if len(email) > 0 {
 		info, err = api.GetUserByEmailContext(ctx, email)
 	} else {
-		plugin.Logger(ctx).Warn("slack_user.getUser", "invalid_quals", "id and email both empty", "quals", quals)
+		plugin.Logger(ctx).Error("slack_user.getUser", "invalid_quals", "id and email both empty", "quals", quals)
 		return nil, nil
 	}
 
 	if err != nil {
 		if err.Error() == "user_not_found" || err.Error() == "users_not_found" {
-			plugin.Logger(ctx).Warn("slack_user.getUser", "not_found_error", err, "quals", quals)
+			plugin.Logger(ctx).Error("slack_user.getUser", "not_found_error", err, "quals", quals)
 			return nil, nil
 		}
 		plugin.Logger(ctx).Error("slack_user.getUser", "query_error", err, "quals", quals)
