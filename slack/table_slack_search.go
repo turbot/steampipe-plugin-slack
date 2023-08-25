@@ -2,6 +2,7 @@ package slack
 
 import (
 	"context"
+	"time"
 
 	"github.com/slack-go/slack"
 
@@ -59,7 +60,7 @@ func listSearches(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 			return nil, err
 		}
 		matchedMessages := msgs.Matches
-		plugin.Logger(ctx).Warn("slack_search", "returning msgs: ", len(matchedMessages))
+		plugin.Logger(ctx).Debug("slack_search", "returning msgs: ", len(matchedMessages))
 		return matchedMessages, err
 	}
 	
@@ -85,6 +86,7 @@ func queryString(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData
 }
 
 func shouldRetryError(err error) bool {
-	plugin.Logger(gContext).Error("slack_search.listSearches", "retry_error", err)
+	plugin.Logger(gContext).Debug("slack_search.listSearches", "retry_error", err, "sleep for secs", 30)
+	time.Sleep(time.Second * 30)
 	return true
 }
