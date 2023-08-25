@@ -11,8 +11,6 @@ import (
 	"github.com/turbot/steampipe-plugin-sdk/plugin/transform"
 )
 
-var gContext context.Context
-
 func tableSlackSearch() *plugin.Table {
 	return &plugin.Table{
 		Name:        "slack_search",
@@ -40,8 +38,6 @@ func tableSlackSearch() *plugin.Table {
 
 func listSearches(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 
-	gContext = ctx
-
 	api, err := connect(ctx, d)
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_search.listSearches", "connection_error", err)
@@ -53,18 +49,20 @@ func listSearches(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateDat
 	params.Count = 100
 
 	listSearch := func(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
-		plugin.Logger(ctx).Warn("slack_search", "retrying", "")
+		plugin.Logger(ctx).Warn("slack_search.listSearch", "q", q, "params", params)
 		msgs, _, err := api.SearchContext(ctx, q, params)
-		plugin.Logger(ctx).Warn("slack_search", "api.SearchContext", err)
 		if err != nil {
 			return nil, err
 		}
 		matchedMessages := msgs.Matches
-		plugin.Logger(ctx).Debug("slack_search", "returning msgs: ", len(matchedMessages))
+		plugin.Logger(ctx).Warn("slack_search", "returning msgs: ", len(matchedMessages))
 		return matchedMessages, err
 	}
-	
-	msgs, err := plugin.RetryHydrate(ctx, d, h, listSearch, &plugin.RetryConfig{ShouldRetryError: shouldRetryError})
+
+	msgs, err := plugin.RetryHydrate(ctx, d, h, listSearch, &plugin.RetryConfig{ShouldRetryError: func(err error) bool {
+		plugin.Logger(ctx).Warn("slack_search.listSearch", "retry_error", err, "sleep for secs", 30)
+		return shouldRetryError(ctx, d, h, err)
+	}})
 
 	if err != nil {
 		plugin.Logger(ctx).Error("slack_search.listSearches", "query_error", err)
@@ -85,8 +83,8 @@ func queryString(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData
 	return q, nil
 }
 
-func shouldRetryError(err error) bool {
-	plugin.Logger(gContext).Debug("slack_search.listSearches", "retry_error", err, "sleep for secs", 30)
-	time.Sleep(time.Second * 30)
+func shouldRetryError(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData, err error) bool {
+	plugin.Logger(ctx).Warn("slack_search.listSearches", "retry_error", err, "sleep for secs", 10)
+	time.Sleep(time.Second * 10)
 	return true
 }
