@@ -1,10 +1,20 @@
-# Table: slack_group
+---
+title: "Steampipe Table: slack_group - Query Slack Groups using SQL"
+description: "Allows users to query Slack Groups, specifically the details and metadata of each group in a Slack workspace."
+---
 
-Slack workspace user groups.
+# Table: slack_group - Query Slack Groups using SQL
+
+Slack Groups are a feature within the Slack communication platform that allows users to create specific groups for targeted discussions. These groups can be created for various purposes, such as departmental communication, project-specific discussions, or even casual chat rooms. The groups can be public or private, and they can have any number of members.
+
+## Table Usage Guide
+
+The `slack_group` table provides insights into the groups within a Slack workspace. As a workspace administrator, you can explore group-specific details through this table, including group name, purpose, and privacy status. Utilize it to manage and monitor the groups in your workspace, such as identifying inactive groups, tracking the purpose of each group, and ensuring the correct privacy settings are in place.
 
 ## Examples
 
 ### List all groups (includes deleted)
+Explore which Slack groups have been deleted and how many users were in each group before deletion. This can help in understanding user participation and engagement levels across different groups.
 
 ```sql
 select
@@ -17,6 +27,7 @@ from
 ```
 
 ### List groups that are currently active
+Identify the active groups within your Slack workspace, along with their user counts. This can help in assessing the active collaboration spaces and their scale within your organization.
 
 ```sql
 select
@@ -30,6 +41,7 @@ where
 ```
 
 ### List all groups a user is a member of
+Discover the various groups that a specific user is associated with. This can be particularly useful to understand the user's roles and responsibilities within the organization.
 
 ```sql
 select
@@ -44,6 +56,7 @@ where
 ```
 
 ### List all user group membership pairs
+Explore the relationships between user groups and their members in your Slack workspace. This query can be used to understand group composition, identify potential overlaps, and ensure appropriate access and permissions.
 
 ```sql
 select

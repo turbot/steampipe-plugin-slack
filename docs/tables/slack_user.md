@@ -1,10 +1,20 @@
-# Table: slack_user
+---
+title: "Steampipe Table: slack_user - Query Slack Users using SQL"
+description: "Allows users to query Slack Users, specifically their profile details, providing insights into user profiles and activity."
+---
 
-Slack workspace users.
+# Table: slack_user - Query Slack Users using SQL
+
+Slack is a channel-based messaging platform used for communication and collaboration within teams. It allows users to send messages, share files, and interact with various apps. A Slack User is an individual with a unique profile within a workspace or organization in Slack.
+
+## Table Usage Guide
+
+The `slack_user` table provides insights into Slack users within a workspace. As an administrator, explore user-specific details through this table, including their profile information, status, and associated metadata. Utilize it to uncover information about users, such as their activity status, role in workspace, and time zone settings.
 
 ## Examples
 
 ### List all users (includes deleted)
+Explore all user profiles, including those that have been deleted, to gain a comprehensive view of your Slack workspace's user history. This can be particularly useful for audits, investigations, or understanding user growth and churn patterns.
 
 ```sql
 select
@@ -14,6 +24,7 @@ from
 ```
 
 ### Get user by ID
+Explore which Slack user corresponds to a specific ID, allowing for targeted user information retrieval and management. This can be useful in scenarios where understanding user behavior or troubleshooting user-specific issues is required.
 
 ```sql
 select
@@ -25,6 +36,7 @@ where
 ```
 
 ### Get user by email
+Explore which Slack user corresponds to a specific email address. This can be useful for identifying the user behind a particular action or message in the Slack platform.
 
 ```sql
 select
@@ -36,6 +48,7 @@ where
 ```
 
 ### List all workspace admins
+Discover the segments that include all workspace administrators, allowing you to understand who holds higher permissions within your organization. This can be beneficial in managing access controls and maintaining security protocols.
 
 ```sql
 select
@@ -49,6 +62,7 @@ where
 ```
 
 ### List all bots
+Discover the segments that consist of bot accounts within your Slack workspace. This can be useful in understanding the extent of automated interactions in your team's communication.
 
 ```sql
 select
@@ -61,6 +75,7 @@ where
 ```
 
 ### List all single channel guests
+Discover the segments that consist of single channel guests within your Slack workspace. This can be particularly useful to understand the extent of guest access and participation in your organization's discussions.
 
 ```sql
 select
@@ -73,6 +88,7 @@ where
 ```
 
 ### List users with domains and locations
+Uncover details of users, including their domain and location, to gain insights into the geographical distribution and email domain usage within your Slack user base. This can be useful for understanding the diversity of your team and for planning localized events or communications.
 
 ```sql
 select
