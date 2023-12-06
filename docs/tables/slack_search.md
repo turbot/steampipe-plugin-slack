@@ -11,6 +11,9 @@ Slack Search is a feature within Slack that allows you to find specific items wi
 
 The `slack_search` table provides insights into the search results within Slack. As a Slack workspace administrator or a team lead, explore specific details through this table, including messages, files, and users that match the search criteria. Utilize it to uncover information about communications, such as the context of a discussion, the details of a project, or the specific pieces of information you are looking for.
 
+**Important Notes**
+- You must specify the `query` in the `where` clause to query this table.
+
 ## Examples
 
 ### Search for anything using [standard slack search syntax](https://slack.com/help/articles/202528808-Search-in-Slack)

@@ -1,9 +1,9 @@
 ---
-title: "Steampipe Table: slack_conversation_member - Query OCI Slack Conversation Members using SQL"
+title: "Steampipe Table: slack_conversation_member - Query Slack Conversation Members using SQL"
 description: "Allows users to query Slack Conversation Members, providing detailed insights into each member's participation in different conversations."
 ---
 
-# Table: slack_conversation_member - Query OCI Slack Conversation Members using SQL
+# Table: slack_conversation_member - Query Slack Conversation Members using SQL
 
 A Slack Conversation Member refers to an individual participant in a specific conversation within the Slack platform. This can include direct messages, private channels, or public channels. It provides a way to manage and monitor the participants of a conversation, including their roles and permissions.
 

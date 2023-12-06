@@ -11,6 +11,9 @@ Slack Access Logs are a record of user activity and actions within a Slack works
 
 The `slack_access_log` table provides insights into user activity within a Slack workspace. As a system administrator or security analyst, you can explore detailed information about events in your workspace through this table, including user logins, file uploads, message postings, and more. Utilize it to audit user actions, troubleshoot issues, and analyze user behavior for security and compliance purposes.
 
+**Important Notes**
+- `slack_access_log` requires a [paid Slack plan](https://slack.com/help/articles/360002084807-View-Access-Logs-for-your-workspace).
+
 ## Examples
 
 ### List all logins
