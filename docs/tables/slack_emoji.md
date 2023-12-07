@@ -16,7 +16,14 @@ The `slack_emoji` table provides insights into custom emojis within a Slack work
 ### List all emoji
 Explore the entire range of emojis available on your Slack workspace. This can help to understand the variety of expressions available for enhancing communication within your team.
 
-```sql
+```sql+postgres
+select
+  *
+from
+  slack_emoji;
+```
+
+```sql+sqlite
 select
   *
 from
@@ -26,7 +33,16 @@ from
 ### Find emoji aliases
 Discover the segments that use aliases in place of actual emojis in Slack. This is useful for understanding how custom emojis are being utilized within your workspace.
 
-```sql
+```sql+postgres
+select
+  *
+from
+  slack_emoji
+where
+  url like 'alias:%';
+```
+
+```sql+sqlite
 select
   *
 from

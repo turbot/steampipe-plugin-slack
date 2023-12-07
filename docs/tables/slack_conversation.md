@@ -16,7 +16,7 @@ The `slack_conversation` table provides insights into conversations within Slack
 ### Conversations shared with external workspaces
 Discover the segments that are shared with external workspaces within your Slack conversations. This can be useful to understand the extent of your organization's collaboration with external entities.
 
-```sql
+```sql+postgres
 select
   id,
   name,
@@ -27,10 +27,35 @@ where
   is_ext_shared;
 ```
 
+```sql+sqlite
+select
+  id,
+  name,
+  is_shared
+from
+  slack_conversation
+where
+  is_ext_shared = 1;
+```
+
 ### Most popular conversations
 Discover the most engaged discussions by identifying the top five conversations with the highest number of members. This can help in understanding user engagement and participation trends within your Slack workspace.
 
-```sql
+```sql+postgres
+select
+  name,
+  num_members
+from
+  slack_conversation
+where
+  num_members is not null
+order by
+  num_members desc
+limit
+  5;
+```
+
+```sql+sqlite
 select
   name,
   num_members
@@ -46,7 +71,7 @@ limit
 
 ### The #general channel (whatever it is called)
 
-```
+```sql+postgres
 select
   *
 from
@@ -55,9 +80,27 @@ where
   is_general;
 ```
 
+```sql+sqlite
+select
+  *
+from
+  slack_conversation
+where
+  is_general = 1;
+```
+
 ### Get conversation by ID
 
+```sql+postgres
+select
+  *
+from
+  slack_conversation
+where
+  id = 'C02GC4A7Q';
 ```
+
+```sql+sqlite
 select
   *
 from
@@ -69,7 +112,7 @@ where
 ### All private channel and group conversations
 Explore the private discussions taking place within channels and groups on Slack. This query is useful for administrators who want to monitor the content and frequency of private conversations for compliance or community management purposes.
 
-```sql
+```sql+postgres
 select
   name,
   created,
@@ -85,6 +128,28 @@ where
     or (
       is_group
       and not is_mpim
+    )
+  )
+order by
+  name;
+```
+
+```sql+sqlite
+select
+  name,
+  created,
+  is_channel,
+  is_group,
+  is_private
+from
+  slack_conversation
+where
+  is_private = 1
+  and (
+    is_channel = 1
+    or (
+      is_group = 1
+      and is_mpim = 0
     )
   )
 order by

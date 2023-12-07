@@ -16,7 +16,14 @@ The `slack_connection` table provides insights into the connections set up in a 
 ### Connection information
 Explore the status and details of your Slack connections to ensure they are functioning correctly and securely. This can be useful in troubleshooting or auditing the security of your communication channels.
 
-```sql
+```sql+postgres
+select
+  *
+from
+  slack_connection;
+```
+
+```sql+sqlite
 select
   *
 from

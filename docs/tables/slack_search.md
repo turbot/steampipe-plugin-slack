@@ -19,7 +19,7 @@ The `slack_search` table provides insights into the search results within Slack.
 ### Search for anything using [standard slack search syntax](https://slack.com/help/articles/202528808-Search-in-Slack)
 Explore the usage of standard Slack search syntax to pinpoint specific conversations. This can be particularly useful in larger teams where tracking down important information from a particular user or channel after a certain date can be time-consuming and challenging.
 
-```sql
+```sql+postgres
 select
   user_name,
   timestamp,
@@ -31,13 +31,38 @@ where
   query = 'in:#steampipe from:nathan urgent after:3/12/2021';
 ```
 
+```sql+sqlite
+select
+  user_name,
+  timestamp,
+  json_extract(channel, '$.name') as channel,
+  text
+from
+  slack_search
+where
+  query = 'in:#steampipe from:nathan urgent after:3/12/2021';
+```
+
 ### Consolidate results of multiple searches
 Analyze the settings to understand urgent messages from specific users in a particular channel after a certain date. This can help in prioritizing responses and managing communication effectively.
-```sql
+
+```sql+postgres
 select
   user_name,
   timestamp,
   channel ->> 'name' as channel,
+  text
+from
+  slack_search
+where
+  query in('in:#steampipe from:nathan urgent after:3/12/2021', 'in:#steampipe from:kai urgent after:3/12/2021');
+```
+
+```sql+sqlite
+select
+  user_name,
+  timestamp,
+  json_extract(channel, '$.name') as channel,
   text
 from
   slack_search

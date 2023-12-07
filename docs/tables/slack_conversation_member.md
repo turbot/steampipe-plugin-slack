@@ -16,7 +16,17 @@ The `slack_conversation_member` table provides insights into individual members'
 ### List member IDs in the #general channel
 Explore which members are part of the general channel. This is useful to understand the audience for general announcements or broad communications.
 
-```sql
+```sql+postgres
+select
+  conversation_id,
+  member_id
+from
+  slack_conversation_member
+where
+  conversation_id in (select id from slack_conversation where is_general);
+```
+
+```sql+sqlite
 select
   conversation_id,
   member_id
@@ -29,7 +39,29 @@ where
 ### List members in the #general channel
 Explore the members within a general conversation channel on Slack, identifying their user details and roles. This can be useful for understanding user participation and roles within a specific channel.
 
-```sql
+```sql+postgres
+select
+  c.id as conversation_id,
+  c.name as conversation_name,
+  u.id as user_id,
+  u.real_name as user_name,
+  u.email as user_email,
+  u.is_admin,
+  u.is_bot,
+  u.is_restricted
+from
+  slack_conversation as c
+  join
+    slack_conversation_member as m
+    on c.id = m.conversation_id
+  join
+    slack_user as u
+    on m.member_id = u.id
+where
+  c.id in (select id from slack_conversation where is_general);
+```
+
+```sql+sqlite
 select
   c.id as conversation_id,
   c.name as conversation_name,
@@ -54,7 +86,26 @@ where
 ### List admins in each channel
 Determine the areas in which administrators are actively participating by identifying their presence in various conversations. This is useful for understanding the distribution of admin resources across different channels.
 
-```sql
+```sql+postgres
+select
+  c.id as conversation_id,
+  c.name as conversation_name,
+  u.id as user_id,
+  u.real_name as user_name,
+  u.email as user_email
+from
+  slack_conversation as c
+  join
+    slack_conversation_member as m
+    on c.id = m.conversation_id
+  join
+    slack_user as u
+    on m.member_id = u.id
+where
+  u.is_admin;
+```
+
+```sql+sqlite
 select
   c.id as conversation_id,
   c.name as conversation_name,
@@ -76,7 +127,7 @@ where
 ### List bots in each channel
 Explore which bots are participating in each conversation on Slack to understand their role and involvement in different channels. This can help in managing and monitoring bot activity across the platform.
 
-```sql
+```sql+postgres
 select
   c.id as conversation_id,
   c.name as conversation_name,
@@ -93,4 +144,23 @@ from
     on m.member_id = u.id
 where
   u.is_bot;
+```
+
+```sql+sqlite
+select
+  c.id as conversation_id,
+  c.name as conversation_name,
+  u.id as user_id,
+  u.real_name as user_name,
+  u.bot_id as bot_id
+from
+  slack_conversation as c
+  join
+    slack_conversation_member as m
+    on c.id = m.conversation_id
+  join
+    slack_user as u
+    on m.member_id = u.id
+where
+  u.is_bot = 1;
 ```
