@@ -8,6 +8,7 @@ name: "slack"
 description: "Steampipe plugin for querying Slack Conversations, Groups, Users and other resources."
 og_description: "Query Slack with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/slack-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Slack + Steampipe
