@@ -8,13 +8,14 @@ name: "slack"
 description: "Steampipe plugin for querying Slack Conversations, Groups, Users and other resources."
 og_description: "Query Slack with SQL! Open source CLI. No DB required."
 og_image: "/images/plugins/turbot/slack-social-graphic.png"
+engines: ["steampipe", "sqlite", "postgres", "export"]
 ---
 
 # Slack + Steampipe
 
 [Slack](https://slack.com/) is a messaging program designed specifically for the workplace.
 
-[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+[Steampipe](https://steampipe.io) is an open-source zero-ETL engine to instantly query cloud APIs using SQL.
 
 For example:
 
@@ -102,7 +103,4 @@ connection "slack" {
 }
 ```
 
-## Get involved
 
-* Open source: https://github.com/turbot/steampipe-plugin-slack
-* Community: [Join #steampipe on Slack →](https://turbot.com/community/join)
