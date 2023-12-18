@@ -2,6 +2,7 @@ package slack
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"math"
 	"os"
@@ -59,4 +60,22 @@ func jsonTimeToTime(ctx context.Context, d *transform.TransformData) (interface{
 		return nil, nil
 	}
 	return jt.Time(), nil
+}
+
+func blockJsonToString(ctx context.Context, d *transform.TransformData) (interface{}, error) {
+	block := d.Value
+	if obj, err := json.Marshal(block); err != nil {
+		return nil, err
+	} else {
+		return string(obj), nil
+	}
+}
+
+func attachmentJsonToString(ctx context.Context, d *transform.TransformData) (interface{}, error) {
+	attachment := d.Value
+	if obj, err := json.Marshal(attachment); err != nil {
+		return nil, err
+	} else {
+		return string(obj), nil
+	}
 }
