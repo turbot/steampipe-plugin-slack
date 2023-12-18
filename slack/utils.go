@@ -2,11 +2,11 @@ package slack
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"math"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/slack-go/slack"
@@ -63,19 +63,72 @@ func jsonTimeToTime(ctx context.Context, d *transform.TransformData) (interface{
 }
 
 func blockJsonToString(ctx context.Context, d *transform.TransformData) (interface{}, error) {
-	block := d.Value
-	if obj, err := json.Marshal(block); err != nil {
+	blocks := d.Value.(slack.Blocks)
+	if blockString, err := parseBlocks(ctx, blocks); err != nil {
 		return nil, err
+	} else if blockString == "" {
+		return nil, nil
 	} else {
-		return string(obj), nil
+		return blockString, nil
 	}
 }
 
 func attachmentJsonToString(ctx context.Context, d *transform.TransformData) (interface{}, error) {
-	attachment := d.Value
-	if obj, err := json.Marshal(attachment); err != nil {
-		return nil, err
-	} else {
-		return string(obj), nil
+	textSeparator := "\n"
+	var attachmentString string
+	attachments := d.Value.([]slack.Attachment)
+	for _, attachment := range attachments {
+		attachmentString += attachment.Text + textSeparator
+		if blockString, err := parseBlocks(ctx, attachment.Blocks); err != nil {
+			return nil, err
+		} else {
+			attachmentString += blockString + textSeparator
+		}
+		if fieldString, err := parseFields(ctx, attachment.Fields); err != nil {
+			return nil, err
+		} else {
+			attachmentString += fieldString + textSeparator
+		}
 	}
+
+	if attachmentString == "" {
+		return nil, nil
+	} else {
+		return strings.TrimSpace(attachmentString), nil
+	}
+}
+
+func parseBlocks(ctx context.Context, blocks slack.Blocks) (string, error) {
+	textSeparator := "\n"
+	var blockString string
+	for _, section := range blocks.BlockSet {
+		switch blockType := section.BlockType(); blockType {
+		case "section":
+			plugin.Logger(ctx).Debug("parsing section block")
+			sectionBlock := section.(*slack.SectionBlock)
+			blockString += sectionBlock.Text.Text + textSeparator
+			for _, textBlockObject := range sectionBlock.Fields {
+				blockString += textBlockObject.Text + textSeparator
+			}
+		case "context":
+			plugin.Logger(ctx).Debug("parsing context block")
+			contextBlock := section.(*slack.ContextBlock)
+			for _, element := range contextBlock.ContextElements.Elements {
+				if elementType := element.MixedElementType(); elementType == "mixed_text" {
+					text := element.(*slack.TextBlockObject).Text
+					blockString += text + textSeparator
+				}
+			}
+		}
+	}
+	return strings.TrimSpace(blockString), nil
+}
+
+func parseFields(ctx context.Context, fields []slack.AttachmentField) (string, error) {
+	textSeparator := "\n"
+	var fieldString string
+	for _, field := range fields {
+		fieldString += field.Value + textSeparator
+	}
+	return strings.TrimSpace(fieldString), nil
 }
