@@ -5,6 +5,7 @@ import (
 	"errors"
 	"math"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -62,6 +63,25 @@ func jsonTimeToTime(ctx context.Context, d *transform.TransformData) (interface{
 	return jt.Time(), nil
 }
 
+func formatUrlStrings(str string) string {
+	re := regexp.MustCompile(`(?U)<.*\|(.*)>`)
+	matches := re.FindAllStringSubmatch(str, -1)
+	for _, match := range matches {
+		str = strings.Replace(str, string(match[0]), string(match[1]), -1)
+	}
+	r := strings.NewReplacer("<", "", ">", "")
+	return r.Replace(str)
+}
+
+func formatTextUrls(ctx context.Context, d *transform.TransformData) (interface{}, error) {
+	text := d.Value.(string)
+	if text == "" {
+		return nil, nil
+	} else {
+		return formatUrlStrings(text), nil
+	}
+}
+
 func blockJsonToString(ctx context.Context, d *transform.TransformData) (interface{}, error) {
 	blocks := d.Value.(slack.Blocks)
 	if blockString, err := parseBlocks(ctx, blocks); err != nil {
@@ -69,7 +89,7 @@ func blockJsonToString(ctx context.Context, d *transform.TransformData) (interfa
 	} else if blockString == "" {
 		return nil, nil
 	} else {
-		return blockString, nil
+		return formatUrlStrings(blockString), nil
 	}
 }
 
@@ -94,7 +114,7 @@ func attachmentJsonToString(ctx context.Context, d *transform.TransformData) (in
 	if attachmentString == "" {
 		return nil, nil
 	} else {
-		return strings.TrimSpace(attachmentString), nil
+		return strings.TrimSpace(formatUrlStrings(attachmentString)), nil
 	}
 }
 

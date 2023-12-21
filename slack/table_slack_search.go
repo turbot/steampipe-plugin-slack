@@ -25,7 +25,7 @@ func tableSlackSearch() *plugin.Table {
 			{Name: "channel", Type: proto.ColumnType_JSON, Description: "Channel or conversation where the search result was found."},
 			{Name: "permalink", Type: proto.ColumnType_STRING, Description: "URL for the search result."},
 			{Name: "user_name", Type: proto.ColumnType_STRING, Transform: transform.FromField("Username"), Description: "Name of the user responsible for the matching text."},
-			{Name: "text", Type: proto.ColumnType_STRING, Description: "Search result text, including query."},
+			{Name: "text", Type: proto.ColumnType_STRING, Transform: transform.FromField("Text").Transform(formatTextUrls), Description: "Search result text, including query."},
 			// Other columns
 			{Name: "blocks", Type: proto.ColumnType_STRING, Transform: transform.FromField("Blocks").Transform(blockJsonToString), Description: "Block sections in the matching artifact."},
 			{Name: "timestamp", Type: proto.ColumnType_TIMESTAMP, Transform: transform.FromField("Timestamp").Transform(stringFloatToTime), Description: "Timestamp of the matching artifact."},
