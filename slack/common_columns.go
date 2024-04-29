@@ -5,6 +5,7 @@ import (
 
 	"github.com/slack-go/slack"
 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/memoize"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
@@ -36,10 +37,28 @@ type WorkspaceInfo struct {
 	EmailDomain string
 }
 
+// if the caching is required other than per connection, build a cache key for the call and use it in Memoize
+// since getTeamInfo is a call, caching should be per connection
+var getTeamInfoMemoized = plugin.HydrateFunc(getTeamInfoUncached).Memoize(memoize.WithCacheKeyFunction(getTeamCacheKey))
+
+// Build a cache key for the call to getTeamInfo.
+func getTeamCacheKey(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	key := "getTeamInfo"
+	return key, nil
+}
+
+func getTeamInfo(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (any, error) {
+	teamInfo, err := getTeamInfoMemoized(ctx, d, h)
+	if err != nil {
+		return nil, err
+	}
+
+	return teamInfo, nil
+}
+
 func getCommonColumns(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
 	var workspaceInfo *WorkspaceInfo
-	getTeamInfoCached := plugin.HydrateFunc(getTeamInfo).WithCache()
-	workspaceData, err := getTeamInfoCached(ctx, d, h)
+	workspaceData, err := getTeamInfo(ctx, d, h)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +74,18 @@ func getCommonColumns(ctx context.Context, d *plugin.QueryData, h *plugin.Hydrat
 	return workspaceInfo, nil
 }
 
-func getTeamInfo(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
+func getWorkspaceDomain(ctx context.Context, d *plugin.QueryData, h *plugin.HydrateData) (interface{}, error) {
+	workspaceData, err := getTeamInfo(ctx, d, h)
+	if err != nil {
+		return nil, err
+	}
+
+	workspace := workspaceData.(*slack.TeamInfo)
+
+	return workspace.Name, nil
+}
+
+func getTeamInfoUncached(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// have we already created and cached the data?
 	cacheKey := "getTeamInfo"
 	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
