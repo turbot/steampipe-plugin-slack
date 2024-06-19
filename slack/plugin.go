@@ -10,6 +10,12 @@ import (
 func Plugin(_ context.Context) *plugin.Plugin {
 	p := &plugin.Plugin{
 		Name: "steampipe-plugin-slack",
+		ConnectionKeyColumns: []plugin.ConnectionKeyColumn{
+			{
+				Name:    "workspace_domain",
+				Hydrate: getWorkspaceDomain,
+			},
+		},
 		ConnectionConfigSchema: &plugin.ConnectionConfigSchema{
 			NewInstance: ConfigInstance,
 		},
