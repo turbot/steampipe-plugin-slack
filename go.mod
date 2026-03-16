@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/slack-go/slack v0.11.3
-	github.com/turbot/steampipe-plugin-sdk/v5 v5.13.1
+	github.com/turbot/steampipe-plugin-sdk/v5 v5.14.0
 )
 
 require (
