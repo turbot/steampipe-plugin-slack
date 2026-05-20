@@ -2,7 +2,7 @@
 
 _Dependencies_
 
-- Upgraded `steampipe-plugin-sdk` to v6.0.0, which adds the `Connection.GetConfig` / `SetConfig` accessors and the per-connection `sync.RWMutex` that guards in-place config mutation. Plugin builds now require Go 1.26. ([#<PR>](https://github.com/turbot/steampipe-plugin-slack/pull/<PR>))
+- Upgraded `steampipe-plugin-sdk` to v6.0.0, which adds the `Connection.GetConfig` / `SetConfig` accessors and the per-connection `sync.RWMutex` that guards in-place config mutation. Plugin builds now require Go 1.26. ([#140](https://github.com/turbot/steampipe-plugin-slack/pull/140))
 
 ## v1.2.0 [2025-10-13]
 
