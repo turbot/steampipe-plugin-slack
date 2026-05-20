@@ -1,7 +1,7 @@
 package slack
 
 import (
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
 )
 
 type slackConfig struct {
@@ -14,9 +14,13 @@ func ConfigInstance() interface{} {
 
 // GetConfig :: retrieve and cast connection config from query data
 func GetConfig(connection *plugin.Connection) slackConfig {
-	if connection == nil || connection.Config == nil {
+	if connection == nil {
 		return slackConfig{}
 	}
-	config, _ := connection.Config.(slackConfig)
+	raw := connection.GetConfig()
+	if raw == nil {
+		return slackConfig{}
+	}
+	config, _ := raw.(slackConfig)
 	return config
 }
