@@ -5,9 +5,9 @@ import (
 
 	"github.com/slack-go/slack"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 func tableSlackSearch() *plugin.Table {
@@ -72,8 +72,8 @@ func listSearches(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateDat
 			}
 		}
 
-		// If no results are returned, msgs.Paging.Pages is 0
-		if msgs.Paging.Pages > 0 && msgs.Paging.Pages != params.Page {
+		// If no results are returned, msgs.Pages is 0
+		if msgs.Pages > 0 && msgs.Pages != params.Page {
 			pagesLeft = true
 			params.Page = params.Page + 1
 		} else {
