@@ -5,9 +5,9 @@ import (
 
 	"github.com/slack-go/slack"
 
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 func tableSlackConversationMember() *plugin.Table {
@@ -40,7 +40,7 @@ func listConversationMembers(ctx context.Context, d *plugin.QueryData, _ *plugin
 			itemsPerPage = int64(*limit)
 		}
 	}
-	
+
 	opts := &slack.GetUsersInConversationParameters{ChannelID: conversationID, Cursor: "", Limit: int(itemsPerPage)}
 
 	for {

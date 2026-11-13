@@ -4,10 +4,10 @@ import (
 	"context"
 
 	"github.com/slack-go/slack"
-	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
-	"github.com/turbot/steampipe-plugin-sdk/v5/memoize"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
+	"github.com/turbot/steampipe-plugin-sdk/v6/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v6/memoize"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin"
+	"github.com/turbot/steampipe-plugin-sdk/v6/plugin/transform"
 )
 
 // Column definitions for the common columns
@@ -88,7 +88,7 @@ func getWorkspaceDomain(ctx context.Context, d *plugin.QueryData, h *plugin.Hydr
 func getTeamInfoUncached(ctx context.Context, d *plugin.QueryData, _ *plugin.HydrateData) (interface{}, error) {
 	// have we already created and cached the data?
 	cacheKey := "getTeamInfo"
-	if cachedData, ok := d.ConnectionManager.Cache.Get(cacheKey); ok {
+	if cachedData, ok := d.ConnectionCache.Get(ctx, cacheKey); ok {
 		return cachedData.(*slack.TeamInfo), nil
 	}
 
@@ -104,7 +104,7 @@ func getTeamInfoUncached(ctx context.Context, d *plugin.QueryData, _ *plugin.Hyd
 		return nil, err
 	}
 
-	d.ConnectionManager.Cache.Set(cacheKey, data)
+	_ = d.ConnectionCache.Set(ctx, cacheKey, data)
 
 	return data, nil
 }
